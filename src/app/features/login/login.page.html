@@ -1,0 +1,30 @@
+<ion-content class="login-screen">
+  <div class="login-container">
+    <h1 class="welcome-title">Bem-Vindo!</h1>
+
+    <ion-item lines="none" class="input-field">
+      <ion-label class="input-label" position="stacked">E-mail</ion-label> 
+      <ion-input placeholder="Digite seu E-mail" type="text" [(ngModel)]="cpf" required></ion-input>
+    </ion-item>
+    
+    <ion-item lines="none" class="input-field">
+      <ion-label class="input-label" position="stacked">Senha</ion-label>
+      <ion-input placeholder="**" type="password" [(ngModel)]="password" required></ion-input>
+    </ion-item>
+
+    <ion-button expand="block" class="login-button" (click)="login()">
+      Acessar
+    </ion-button>
+
+    <!-- Atualizando para chamar o método correto -->
+    <a (click)="goToResetPassword()" class="forgot-password">Esqueceu a Senha?</a>
+
+    <ion-button expand="block" class="create-account-button" (click)="goToRegister()">
+      Abrir Conta
+    </ion-button>
+
+    <div class="extra-options">
+      <p>Usar <a (click)="loginWithFingerprint()">Impressão Digital</a> para Acesso.</p>
+    </div>
+  </div>
+</ion-content>

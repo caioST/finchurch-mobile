@@ -1,0 +1,61 @@
+.ion-padding {
+    --background: #00d1a0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+    padding: 0;
+}
+
+.fingerprint-container {
+    background-color: #F1FFF3;
+    height: 80vh;
+    width: 100%;
+    max-width: 800px; 
+    margin: 0 auto;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+    position: fixed;
+}
+
+.title-fingerprint {
+    color: #0E3E3E;
+    text-align: center;
+
+    font-size: 35px;
+    font-style: normal;
+    font-weight: bold;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin-top: 40px;
+    line-height: normal;
+}
+
+.title {
+    color:#0E3E3E;
+    text-align: center;
+    
+    /* Titlle */
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    margin-top: 120px;
+    margin-bottom: 100px;
+    line-height: 25px; /* 110% */
+}
+
+.register-button {
+    --color: #093030;
+    --border-radius: 36px;
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: capitalize;
+  
+    --background: #DFF7E2;
+    width: 80%;
+    margin: 20px auto; 
+    height: 40px;
+}

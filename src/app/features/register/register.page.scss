@@ -1,0 +1,104 @@
+.register-screen {
+    --background: #00d1a0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+    padding: 0;
+}
+
+.form-container {
+    background-color: #F1FFF3;
+    height: 80vh;
+    width: 100%;
+    max-width: 800px; 
+    margin: 0 auto;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    position: fixed;
+}
+
+.title {
+    color:#093030;
+    text-align: center;
+    font-size: 30px;
+    font-style: normal;
+    margin: 70px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.input-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaçamento entre os inputs */
+}
+
+.input-field {
+    --background: transparent;
+    --border-width: 0px;
+
+    ion-label {
+        color: #093030;
+        font-size: 13px; /* Um pouco menor */
+        font-weight: bold;
+        line-height: normal;
+        
+    }
+
+    ion-input {
+        --background: #DFF7E2;
+        color: #093030;
+        --padding-start: 10px;
+        --padding-end: 10px;
+        border-radius: 20px;
+        left: 17px;
+        width: 100%;
+        height: 34px; /* Aumentado para facilitar a digitação */
+    }
+}
+
+.register-button {
+    --color: #093030;
+    --border-radius: 36px;
+    font-weight: bold;
+    --background: #00d1a0;
+    width: 70%; /* Aumentado para ficar mais proporcional na tela menor */
+    margin: 2px auto; /* Menos margem */
+    height: 45px; /* Levemente aumentado */
+}
+
+.terms {
+    color: #4B4544;
+    text-align: center;
+    font-size: 10px; /* Reduzido para caber melhor */
+    font-style: normal;
+    line-height: normal;
+    bottom: 86px;
+
+    a {
+        color: #4B4544;
+        font-weight: bold;
+        text-decoration: none;
+    }
+}
+
+.extra-options {
+    color: #4B4544;
+    text-align: center;
+    font-size: 10px; /* Reduzido */
+    font-style: normal;
+    line-height: normal;
+
+    a {
+        color: #0068FF;
+        font-weight: bold;
+        text-decoration: none;
+    }
+}

@@ -1,0 +1,102 @@
+/* Estilização geral */
+ion-content {
+    --background: #ffffff;
+    padding: 15px;
+}
+
+.terms-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Título */
+.terms-title {
+    color: #093030;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Lista numerada */
+ol {
+    padding-left: 20px;
+    margin: 15px 0;
+    color: #333;
+}
+
+ol li {
+    margin-bottom: 15px;
+}
+
+ol li strong {
+    font-weight: 600;
+    color: #0e3e3e;
+}
+
+ol p, ol ul {
+    margin-top: 8px;
+    color: #666;
+    font-size: 15px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+ul li {
+    list-style-type: disc;
+    margin-bottom: 5px;
+}
+
+/* Botões */
+ion-button {
+    margin-top: 20px;
+    --border-radius: 25px;
+    height: 45px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.accept-button {
+    --background: #00d1a0;
+    color: #093030;
+}
+
+.decline-button {
+    --background: #e0e0e0;
+    color: #093030;
+    margin-top: 10px;
+}
+
+.close-button {
+    --background: #e0e0e0;
+    color: #093030; /* Cor do texto do botão */
+    font-size: 16px;
+}
+
+/* Estilização para links */
+a {
+    color: #0068FF;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .terms-content {
+        padding: 15px;
+    }
+
+    .terms-title {
+        font-size: 20px;
+    }
+
+    ion-button {
+        font-size: 14px;
+    }
+}

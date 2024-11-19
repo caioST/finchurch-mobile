@@ -1,0 +1,101 @@
+.login-screen {
+    --background: #00d1a0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    height: 100vh;
+  }
+  
+  .login-container {
+    background-color: #F1FFF3;
+    height: 80vh;
+    width: 100%;
+    max-width: 500px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    position: fixed;
+    margin: auto;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+  }
+  
+  .welcome-title {
+    margin-bottom: 50px;
+    font-weight: bold;
+    font-size: 24px;
+    color: #093030;
+    text-align: center;
+  }
+  
+  .input-field {
+    --background: transparent;
+    --border-width: 0px;
+    margin-bottom: 20px;
+  
+    ion-label {
+      color: #093030;
+      margin-bottom: 20px;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  
+    ion-input {
+      --background: #DFF7E2; /* Cor de fundo dos inputs */
+      --padding-start: 10px;
+      --padding-end: 10px;
+      border-radius: 8px;
+      color: #093030;
+      font-size: 16px;
+      height: 45px;
+    }
+  }
+  
+  .login-button {
+    --color: #093030;
+    --border-radius: 36px;
+    font-weight: bold;
+    font-size: 15px;
+  
+    --background: #00d1a0;
+    width: 50%;
+    margin: 20px auto;
+    height: 40px;
+  }
+  
+  .create-account-button {
+    --color: #093030;
+    --border-radius: 36px;
+    font-weight: bold;
+    font-size: 15px;
+  
+    --background: #DFF7E2;
+    width: 50%;
+    margin: 20px auto; 
+    height: 40px;
+  }
+  
+  .forgot-password {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #093030;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .extra-options {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #093030;
+    text-align: center;
+    font-weight: bold;
+  
+    a {
+      color: #0068FF;
+      font-weight: bold;
+      text-decoration: none;
+    }
+  }

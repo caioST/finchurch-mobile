@@ -1,0 +1,57 @@
+<ion-content class="register-screen">
+  <ion-title class="title">Criar Conta</ion-title>
+  <div class="form-container">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <!-- Campos do formulário -->
+      <ion-item lines="none" class="input-field">
+        <ion-label class="input-label">Nome Completo</ion-label>
+        <ion-input formControlName="fullName" type="text" placeholder="José Silva"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-field">
+        <ion-label class="input-label">CPF</ion-label>
+        <ion-input formControlName="cpf" type="text" placeholder="123.456.789-00"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-field">
+        <ion-label class="input-label">E-mail</ion-label>
+        <ion-input formControlName="email" type="email" placeholder="exemplo@exemplo.com"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-field">
+        <ion-label class="input-label">Telefone Celular</ion-label>
+        <ion-input formControlName="phone" type="tel" placeholder="(21) 12345-6789"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-field">
+        <ion-label class="input-label">Data de Nascimento</ion-label>
+        <ion-input formControlName="birthDate" type="date"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-field">
+        <ion-label class="input-label">Senha</ion-label>
+        <ion-input formControlName="password" type="password" placeholder="****"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none" class="input-field">
+        <ion-label class="input-label">Confirmar Senha</ion-label>
+        <ion-input formControlName="confirmPassword" type="password" placeholder="****"></ion-input>
+      </ion-item>
+
+      <!-- Termos de uso -->
+      <div class="terms">
+        <p>Para continuar, você deve concordar com os 
+          <a (click)="openTermsModal()">Termos de Uso e Políticas de Privacidade.</a>
+        </p>
+      </div>
+
+      <!-- Botão de Cadastro -->
+      <ion-button expand="block" class="register-button" type="submit">Abrir Conta</ion-button>
+
+      <!-- Acessar conta existente -->
+      <div class="extra-options">
+        <p>Você já tem uma conta? <a (click)="goToLogin()">Acessar Conta.</a></p>
+      </div>
+    </form>
+  </div>
+</ion-content>

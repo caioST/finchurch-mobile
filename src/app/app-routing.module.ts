@@ -1,15 +1,72 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CategoriasComponent } from './shared/components/categorias/categorias.component';
+import { SubcategoriasComponent } from './shared/components/subcategorias/subcategorias.component';
+import { ResumoCategoriaComponent } from './shared/components/resumo-categoria/resumo-categoria.component';
+import { AdicionarValorComponent } from './shared/components/adicionar-valor/adicionar-valor.component';
+
 
 const routes: Routes = [
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
+
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'splash',
     pathMatch: 'full'
+  },
+
+  {
+    path: 'splash',
+    loadChildren: () => import('./features/splash/splash.module').then(m => m.SplashPageModule)
+  },
+
+  {
+    path: 'access',
+    loadChildren: () => import('./features/access/access.module').then(m => m.AccessPageModule)
+  },
+
+  {
+    path: 'login',
+    loadChildren: () => import('./features/login/login.module').then(m => m.LoginPageModule)
+  },
+
+  {
+    path: 'register',
+    loadChildren: () => import('./features/register/register.module').then(m => m.RegisterPageModule)
+  },
+
+  {
+    path: 'forgot-password',
+    loadChildren: () => import('./features/forgot-password/forgot-password.module').then(m => m.ForgotPasswordPageModule)
+  },
+
+  {
+    path: 'fingerprint-authentication',
+    loadChildren: () => import('./features/fingerprint-authentication/fingerprint-authentication.module').then(m => m.FingerprintAuthenticationPageModule)
+  },
+
+  {
+    path: 'categorias',
+    component: CategoriasComponent
+  },
+
+  {
+    path: 'subcategorias/:categoriaId/:colecao',
+    component: SubcategoriasComponent
+  },
+
+  { 
+    path: 'subcategorias/:colecao/:categoriaId', 
+    component: SubcategoriasComponent 
+  },
+
+  { 
+    path: 'subcategoria/:colecao/:categoriaId/:subcategoriaId', 
+    component: ResumoCategoriaComponent 
+  },
+
+  { 
+    path: 'subcategoria/:colecao/:categoriaId/:subcategoriaId/adicionar', 
+    component: AdicionarValorComponent 
   },
 ];
 

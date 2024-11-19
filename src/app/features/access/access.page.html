@@ -1,0 +1,25 @@
+<ion-content class="ion-padding" fullscreen>
+  <div class="container">
+    <div class="logo-container">
+      <img src="/src/assets/icon/finchurch.png" alt="Logo FinChurch" class="logo">
+      <h1 class="title">FinChurch</h1>
+    </div>
+
+    <div class="button-group">
+      <ion-button expand="block" class="login-button"(click)="goToLogin()">
+        Entrar
+      </ion-button>
+
+      <ion-button 
+      expand="block" 
+      class="open-account-button"
+      (click)="goToRegister()">
+        Abrir Conta
+      </ion-button>
+    </div>
+
+    <a (click)="resetPassword()" class="forgot-password">Esqueceu a Senha?</a>
+
+  </div>
+
+</ion-content>

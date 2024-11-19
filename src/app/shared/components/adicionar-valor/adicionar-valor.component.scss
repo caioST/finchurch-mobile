@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.page-valores {
+    --background: #00d1a0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+    padding: 0;
+}
+
+ion-header {
+    background-color: #00D09E; /* Cor do cabeçalho */
+    color: white; /* Cor do texto */
+    box-shadow: none;
+}
+
+ion-toolbar {
+    --background: #00D09E; /* Cor do fundo do toolbar */
+    box-shadow: none;
+
+    ion-title {
+        color: #052224;
+        font-weight: bold;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+    }
+}
+
+.adicionar-valor-container {
+    background-color: #F1FFF3;
+    height: 80vh;
+    width: 100%;
+    max-width: 800px; 
+    margin: 0 auto;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    position: fixed;
+}
+
+.title {
+    color:#093030;
+    text-align: center;
+    font-size: 30px;
+    font-style: normal;
+    margin: 70px;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.input-field {
+    --background: transparent;
+    --border-width: 0px;
+
+    ion-label {
+        color: #093030;
+        font-size: 13px; /* Um pouco menor */
+        font-weight: bold;
+        line-height: normal;
+        
+    }
+
+    ion-input {
+        --background: #DFF7E2;
+        color: #093030;
+        --padding-start: 10px;
+        --padding-end: 10px;
+        border-radius: 20px;
+        left: 17px;
+        width: 100%;
+        height: 34px; /* Aumentado para facilitar a digitação */
+    }
+}
+
+.nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    ion-toolbar {
+        --background: #DFF7E2;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        border-top: 1px solid #dcdcdc;
+
+        ion-buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+
+            ion-icon {
+                font-size: 1.6rem;
+                color: #333;
+            }
+        }
+    }
+}
