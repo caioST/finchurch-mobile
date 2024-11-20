@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser'; 
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -23,17 +23,18 @@ import { CategoriasComponent } from './shared/components/categorias/categorias.c
 import { FinanceService } from './core/services/finance.service';
 import { ErrorHandler } from './core/services/error-handler.service';
 import { SubcategoriasComponent } from './shared/components/subcategorias/subcategorias.component';
-import { ResumoCategoriaComponent } from './shared/components/resumo-categoria/resumo-categoria.component';
+import { ResumoSubcategoriaComponent } from './shared/components/resumo-categoria/resumo-categoria.component';
 import { AdicionarValorComponent } from './shared/components/adicionar-valor/adicionar-valor.component';
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
     AppComponent,
     TermsModalComponent,
     CategoriasComponent,
     SubcategoriasComponent,
     AdicionarValorComponent,
-    ResumoCategoriaComponent
+    ResumoSubcategoriaComponent
   ],
   imports: [
     BrowserModule, 

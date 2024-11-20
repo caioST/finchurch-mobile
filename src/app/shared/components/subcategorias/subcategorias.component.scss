@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+.page-categorias, .page-subcategorias {
+    --background: #00D09E; /* Cor do fundo da página */
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    height: 100vh;
+    overflow: auto; /* Permite rolagem se necessário */
+    background-color: #00D09E; /* Garantindo que o fundo seja verde */
+}
+
+ion-header {
+    background-color: #00D09E; /* Cor do cabeçalho */
+    color: white; /* Cor do texto */
+    box-shadow: none;
+}
+
+ion-toolbar {
+    --background: #00D09E; /* Cor do fundo do toolbar */
+    box-shadow: none;
+
+    ion-title {
+        color: #052224;
+        font-weight: bold;
+        font-family: 'Poppins', sans-serif;
+    }
+}
+
+ion-title {
+    font-size: 20px; /* Tamanho da fonte do título */
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.saldo-header {
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.saldo-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 15px;
+
+    .titulo {
+        font-size: 16px; /* Tamanho do título */
+        color: #093030; /* Cor do título */
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .valor {
+        font-size: 24px; /* Tamanho do valor, maior para destaque */
+        font-weight: bold; /* Negrito para os valores */
+        color: #ffffff; /* Cor do valor */
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .despesa-titulo .valor {
+        color: #0068FF; /* Cor do valor das despesas */
+        font-family: 'Poppins', sans-serif;
+    }
+
+    ion-icon {
+        margin-right: 8px; /* Espaçamento entre o ícone e o texto */
+        font-size: 20px; /* Tamanho do ícone */
+        color: #052224; /* Cor do ícone */
+    }
+}
+
+.progress-bar {
+    width: 100%;
+    margin-top: 8px;
+
+    ion-progress-bar {
+        height: 10px;
+        --progress-background: #00a17a;
+        --background: #d9d9d9;
+        border-radius: 4px;
+    }
+
+    .progress-text {
+        font-size: 1rem;
+        color: #052224;
+        text-align: center;
+        margin-top: 8px;
+    }
+}
+
+.categoria-list, .subcategoria-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Centraliza os cards */
+    padding-top: 20px;
+    background-color: #F1FFF3;
+    height: 65%; 
+    width: 100%; 
+    max-width: 500px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0 auto;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    padding: 20px;
+    gap: 10px; /* Espaço entre os cards */
+}
+
+.categoria-card, .subcategoria-card {
+    background-color: #6DB6FE;
+    height: 90px;
+    width: calc(33.333% - 20px); /* Largura fixa para três cards por linha */
+    max-width: 120px; /* Limite de largura para não ficar exagerado em telas grandes */
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.categoria-card:hover, .subcategoria-card:hover {
+    background-color: #0068FF;
+}
+
+.categoria-card:active, .subcategoria-card:active {
+    background-color: #004C99;
+}
+
+.categoria-card ion-icon, .subcategoria-card ion-icon {
+    font-size: 35px;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.categoria-nome, .subcategoria-nome {
+    color: #093030;
+    font-weight: 600;
+    text-align: center;
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; /* Para garantir que o texto fique dentro do card */
+}
+
+.nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    ion-toolbar {
+        --background: #DFF7E2;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        border-top: 1px solid #dcdcdc;
+
+        ion-buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+
+            ion-icon {
+                font-size: 1.6rem;
+                color: #333;
+            }
+        }
+    }
+}

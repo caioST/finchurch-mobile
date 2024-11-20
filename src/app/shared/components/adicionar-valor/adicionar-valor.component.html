@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttom slot="start" (click)="voltar()">
+    <ion-buttons slot="start" (click)="voltar()">
       <ion-icon name="arrow-back"></ion-icon>
     </ion-buttons>
     <ion-title>Adicionar Entrada</ion-title>
@@ -10,6 +10,7 @@
 <ion-content class="page-valores">
 
   <div class="adicionar-valor-container">
+
     <form (ngSubmit)="salvarValor()">
 
       <ion-item class="input-field" lines="none">

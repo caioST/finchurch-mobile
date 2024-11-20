@@ -1,3 +1,93 @@
-<p>
-  resumo-categoria works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="router.navigate(['/categorias'])">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>{{ subcategoria?.nome || 'Resumo' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="resumo-page">
+  <!-- Header da Subcategoria -->
+  <div class="saldo-header">
+
+    <div class="saldo-info">
+
+      <div class="saldo-titulo">
+        <span class="titulo">Entradas</span>
+        <h2 class="valor">R$ {{ saldos.entradas | number: '1.2-2' }}</h2>
+      </div>
+
+
+      <div class="despesa-titulo">
+        <span class="titulo">Saídas</span>
+        <h2 class="valor">R$ {{ saldos.saidas | number: '1.2-2' }}</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Barra de Progresso -->
+  <div class="progresso">
+    <ion-progress-bar
+      value="0.4"
+      color="success"
+      class="barra-progresso"
+    ></ion-progress-bar>
+    <span>40% - 30% de Suas Despesas, Parece Bom.</span>
+  </div>
+
+  <!-- Histórico de Transações -->
+  <ion-list class="historico-list">
+    <ion-item-divider>
+      <ion-label>Histórico de Transações</ion-label>
+    </ion-item-divider>
+    <ion-item *ngFor="let transacao of historico">
+      <ion-icon
+        [name]="transacao.tipo === 'entrada' ? 'arrow-up-outline' : 'arrow-down-outline'"
+        slot="start"
+        [color]="transacao.tipo === 'entrada' ? 'success' : 'danger'"
+      ></ion-icon>
+      <ion-label>
+        <h2>{{ transacao.titulo }}</h2>
+        <p>{{ transacao.data | date: 'shortTime' }} - {{ transacao.data | date: 'MMMM dd' }}</p>
+      </ion-label>
+      <span
+        slot="end"
+        [class]="transacao.tipo === 'entrada' ? 'valor-entrada' : 'valor-saida'"
+      >
+        R$ {{ transacao.quantia | number: '1.2-2' }}
+      </span>
+    </ion-item>
+  </ion-list>
+
+  <!-- Botão de Adicionar -->
+  <div class="adicionar">
+    <ion-button expand="block" (click)="adicionarValor()" class="add-button">
+      Adicionar
+    </ion-button>
+  </div>
+
+</ion-content>
+
+<ion-footer class="nav-footer">
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button>
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="analytics-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="swap-horizontal-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="albums-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

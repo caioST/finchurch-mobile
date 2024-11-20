@@ -1,3 +1,68 @@
-<p>
-  subcategorias works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="voltar()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-buttons>
+    <ion-title>Subcategorias</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-subcategorias">
+  <!-- Header de saldo -->
+  <div class="saldo-header">
+    <div class="saldo-info">
+      
+      <div class="saldo-titulo">
+        <ion-icon name="wallet"></ion-icon>
+        <div class="titulo">Saldo Total</div>
+        <div class="valor">R$ {{ saldos.total | number: '1.2-2' }}</div>
+      </div>
+
+      <div class="despesa-titulo">
+        <ion-icon name="card"></ion-icon>
+        <div class="titulo">Despesa Total</div>
+        <div class="valor">-R$ {{ saldos.despesas | number: '1.2-2' }}</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Lista de Subcategorias -->
+  <div class="categoria-list" *ngIf="subcategorias.length > 0; else noData">
+    <div *ngFor="let subcategoria of subcategorias" class="categoria-card"
+      (click)="selecionarSubcategoria(subcategoria.id)">
+      <ion-icon *ngIf="subcategoria.icone" [name]="subcategoria.icone"></ion-icon>
+      <div class="categoria-nome">{{ subcategoria.nome || 'Sem Nome' }}</div>
+    </div>
+  </div>
+
+  <!-- Mensagem para quando não há subcategorias -->
+  <ng-template #noData>
+    <div class="no-data">
+      <p>Não há subcategorias disponíveis para esta categoria.</p>
+    </div>
+  </ng-template>
+</ion-content>
+
+<!-- Barra de navegação inferior -->
+<ion-footer class="nav-footer">
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button>
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="analytics-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="swap-horizontal-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="albums-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
