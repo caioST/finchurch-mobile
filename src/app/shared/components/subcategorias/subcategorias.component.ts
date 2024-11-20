@@ -31,9 +31,12 @@ export class SubcategoriasComponent implements OnInit {
   loadSubcategorias() {
     this.financeService.getAllSubcategorias().subscribe({
       next: (subcategorias) => {
-        this.subcategorias = subcategorias.filter(
-          (sub) => sub.categoriaId === this.categoriaId && sub.colecao === this.colecao
-        );
+        this.subcategorias = subcategorias
+          .filter((sub) => sub.categoriaId === this.categoriaId && sub.colecao === this.colecao)
+          .map((sub) => ({
+            ...sub,
+            quantia: sub.quantia || 0, // Garante que `quantia` nunca seja nulo
+          }));
         this.calculateSaldos();
       },
       error: (error) => {

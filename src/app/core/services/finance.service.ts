@@ -66,11 +66,11 @@ export class FinanceService {
     colecao: string,
     categoriaId: string,
     subcategoriaId: string
-  ): Observable<{ 
-    valorMeta: number; 
-    economizado: number; 
-    nome: string; 
-    icone: string; 
+  ): Observable<{
+    valorMeta: number;
+    economizado: number;
+    nome: string;
+    icone: string;
   }> {
     return this.firestore
       .collection(colecao) // Coleção principal
@@ -90,8 +90,8 @@ export class FinanceService {
         })
       );
   }
-  
-  
+
+
 
   getSubcategoriaTransacoes(colecao: string, categoriaId: string, subcategoriaId: string): Observable<any[]> {
     return this.firestore
@@ -105,17 +105,18 @@ export class FinanceService {
 
   addSubcategoriaValor(
     colecao: string,
+    categoriaId: string,
     subcategoriaId: string,
-    data: any
+    data: { tipo: string; quantia: number; data: Date }
   ): Promise<void> {
     const docRef = this.firestore
-      .collection(colecao)
-      .doc('Receitas') // Atualize conforme necessário
-      .collection('subcolecao')
-      .doc(subcategoriaId)
-      .collection('transacoes')
-      .doc();
+      .collection(colecao) // Coleção dinâmica
+      .doc(categoriaId) // Documento principal
+      .collection('subcolecao') // Subcoleção
+      .doc(subcategoriaId) // Subcategoria específica
+      .collection('transacoes') // Transações
+      .doc(); // Novo documento de transação
 
-    return docRef.set(data);
+    return docRef.set(data); // Salva os dados fornecidos
   }
 }

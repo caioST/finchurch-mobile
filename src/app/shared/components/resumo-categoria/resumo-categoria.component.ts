@@ -68,16 +68,14 @@ export class ResumoSubcategoriaComponent implements OnInit {
   }
 
   calcularSaldos(): void {
-    // Filtra e soma os valores de entrada
     const entradas = this.historico
-      .filter((transacao) => transacao.tipo === 'entrada')
+      .filter((transacao) => transacao.tipo === 'entrada' && transacao.quantia > 0) // Validação de tipo e valor
       .reduce((total, transacao) => total + transacao.quantia, 0);
-
-    // Filtra e soma os valores de saída
+  
     const saidas = this.historico
-      .filter((transacao) => transacao.tipo === 'saida')
+      .filter((transacao) => transacao.tipo === 'saida' && transacao.quantia > 0) // Validação de tipo e valor
       .reduce((total, transacao) => total + transacao.quantia, 0);
-
+  
     this.saldos = { entradas, saidas }; // Atualiza os saldos
   }
 
