@@ -37,7 +37,8 @@
 .input-form {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Espaçamento entre os inputs */
+    gap: 15px; 
+    padding: 10px 0;
 }
 
 .input-field {
@@ -49,6 +50,7 @@
         font-size: 13px; /* Um pouco menor */
         font-weight: bold;
         line-height: normal;
+        margin-bottom: 5px;
         
     }
 

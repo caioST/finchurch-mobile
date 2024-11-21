@@ -85,4 +85,8 @@ export class ResumoSubcategoriaComponent implements OnInit {
       `/subcategoria/${this.colecao}/${this.categoriaId}/${this.subcategoriaId}/adicionar`,
     ]);
   }
+
+  voltar(): void {
+    this.router.navigate([`/subcategorias/${this.colecao}/${this.categoriaId}`]);
+  }
 }

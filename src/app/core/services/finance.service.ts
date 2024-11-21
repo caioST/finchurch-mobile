@@ -59,6 +59,7 @@ export class FinanceService {
       map((subcategoriasPorColecao) => subcategoriasPorColecao.flat())
     );
   }
+  
 
 
 
@@ -107,7 +108,7 @@ export class FinanceService {
     colecao: string,
     categoriaId: string,
     subcategoriaId: string,
-    data: { tipo: string; quantia: number; data: Date }
+    data: { tipo: string; quantia: number; data: Date; titulo: string; categoria: string; mensagem?: string }
   ): Promise<void> {
     const docRef = this.firestore
       .collection(colecao) // Coleção dinâmica
@@ -116,7 +117,18 @@ export class FinanceService {
       .doc(subcategoriaId) // Subcategoria específica
       .collection('transacoes') // Transações
       .doc(); // Novo documento de transação
-
-    return docRef.set(data); // Salva os dados fornecidos
+  
+    const transacao = {
+      tipo: data.tipo,
+      quantia: data.quantia,
+      data: data.data,
+      titulo: data.titulo,
+      categoria: data.categoria,
+      mensagem: data.mensagem || '', // Valor padrão para mensagem
+    };
+  
+    return docRef.set(transacao); // Salva os dados fornecidos
   }
+  
+  
 }

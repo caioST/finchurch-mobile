@@ -10,13 +10,16 @@
 }
 
 ion-header {
-    background-color: #00D09E; /* Cor do cabeçalho */
-    color: white; /* Cor do texto */
+    background-color: #00D09E;
+    /* Cor do cabeçalho */
+    color: white;
+    /* Cor do texto */
     box-shadow: none;
 }
 
 ion-toolbar {
-    --background: #00D09E; /* Cor do fundo do toolbar */
+    --background: #00D09E;
+    /* Cor do fundo do toolbar */
     box-shadow: none;
 
     ion-title {
@@ -24,14 +27,15 @@ ion-toolbar {
         font-weight: bold;
         font-family: 'Poppins', sans-serif;
         text-align: center;
+        align-items: center;
     }
 }
 
 .adicionar-valor-container {
     background-color: #F1FFF3;
-    height: 80vh;
+    height: 85vh;
     width: 100%;
-    max-width: 800px; 
+    max-width: 800px;
     margin: 0 auto;
     border-top-left-radius: 50px;
     border-top-right-radius: 50px;
@@ -44,38 +48,43 @@ ion-toolbar {
     position: fixed;
 }
 
-.title {
-    color:#093030;
-    text-align: center;
-    font-size: 30px;
-    font-style: normal;
-    margin: 70px;
-    font-weight: bold;
-    text-transform: capitalize;
+.input-form {
+    background: transparent;
 }
 
 .input-field {
-    --background: transparent;
-    --border-width: 0px;
+    --background: #DFF7E2;
+    color: #093030;
+    --padding-start: 10px;
+    --padding-end: 10px;
+    border: none; 
+    outline: none; 
+    box-shadow: none; 
+    border-radius: 20px;
+    width: 100%;
+    height: 34px; 
+    margin-bottom: 30px; 
+}
+  
+  ion-label,
+  .input-label {
+    font-size: 12px; /* Reduz tamanho do texto */
+    font-weight: bold;
+  }
+  
+  ion-input {
+    height: 36px; /* Ajusta altura do input */
+    color: #052224;
+  }
 
-    ion-label {
-        color: #093030;
-        font-size: 13px; /* Um pouco menor */
-        font-weight: bold;
-        line-height: normal;
-        
-    }
-
-    ion-input {
-        --background: #DFF7E2;
-        color: #093030;
-        --padding-start: 10px;
-        --padding-end: 10px;
-        border-radius: 20px;
-        left: 17px;
-        width: 100%;
-        height: 34px; /* Aumentado para facilitar a digitação */
-    }
+ion-button {
+    --color: #093030;
+    --border-radius: 36px;
+    font-weight: bold;
+    --background: #00d1a0;
+    width: 70%;
+    margin: 2px auto;
+    height: 45px;
 }
 
 .nav-footer {

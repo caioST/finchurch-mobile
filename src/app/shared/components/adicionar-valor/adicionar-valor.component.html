@@ -1,42 +1,51 @@
 <ion-header>
   <ion-toolbar>
+    <ion-title>Adicionar Valor</ion-title>
     <ion-buttons slot="start">
-      <ion-icon name="arrow-back"></ion-icon>
+      <ion-back-button defaultHref="/categorias"></ion-back-button>
     </ion-buttons>
-    <ion-title>Adicionar Entrada</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="page-valores">
-
   <div class="adicionar-valor-container">
+    <form (submit)="adicionarTransacao()" style="width: 100%;">
 
-    <form (ngSubmit)="salvarValor()">
+      <ion-list class="input-form" lines="none">
+        <ion-item class="input-field" lines="none">
+          <ion-select [(ngModel)]="tipo" name="tipo">
+            <ion-select-option value="entrada">Entrada</ion-select-option>
+            <ion-select-option value="saida">Saída</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-      <ion-item class="input-field" lines="none">
-        <label for="data" class="input-label">Data</label>
-        <ion-input type="date" id="data" [(ngModel)]="valor.data" name="data" required />
-      </ion-item>
+        <ion-item class="input-field" lines="none">
 
-      <ion-item class="input-field" lines="none">
-        <ion-label for="titulo" class="input-label">Título</ion-label>
-        <ion-input type="text" id="titulo" [(ngModel)]="valor.titulo" name="titulo" required />
-      </ion-item>
+          <ion-input [(ngModel)]="categoria" name="Categoria" placeholder="Categoria" required></ion-input>
+        </ion-item>
 
-      <ion-item class="input-field" lines="none">
-        <ion-label for="quantia" class="input-label">Quantia</ion-label>
-        <ion-input type="number" id="quantia" [(ngModel)]="valor.quantia" name="quantia" required />
-      </ion-item>
+        <ion-item class="input-field" lines="none">
+          <ion-input [(ngModel)]="titulo" name="Título" placeholder="Título" required></ion-input>
+        </ion-item>
 
-      <ion-item class="input-field" lines="none">
-        <ion-label for="mensagem" class="input-label">Mensagem (opcional)</ion-label>
-        <textarea id="mensagem" [(ngModel)]="valor.mensagem" name="mensagem"></textarea>
-      </ion-item>
+        <ion-item class="input-field" lines="none">
+          <ion-input [(ngModel)]="quantia" name="Quantia" type="number" placeholder="Quantia" required></ion-input>
+        </ion-item>
 
-      <button type="submit">Salvar</button>
+        <ion-item class="input-field" lines="none">
+          <ion-input type="date" id="data" [(ngModel)]="data" name="Data" placeholder="Data" required></ion-input>
+        </ion-item>
+
+        <ion-item class="input-field" lines="none">
+          <ion-textarea [(ngModel)]="mensagem" name="Mensagem" placeholder="Mensagem" auto-grow="true"></ion-textarea>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" type="submit">Salvar</ion-button>
     </form>
   </div>
 </ion-content>
+
 
 <!-- Barra de navegação inferior -->
 <ion-footer class="nav-footer">
