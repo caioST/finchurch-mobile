@@ -85,18 +85,26 @@ export class CategoriasComponent implements OnInit {
   }
 
   /**
-   * Calcula saldos de receitas, despesas, etc.
+   * Atualiza saldos com base nas categorias e subcategorias
    */
   calculateSaldos(): void {
+    const receitaTotal = this.calculateTotal(this.receitas);
+    const despesaTotal = this.calculateTotal(this.despesas);
+    const departamentoTotal = this.calculateTotal(this.departamentos);
+    const campanhaTotal = this.calculateTotal(this.campanhas);
+
+    // Atualiza os saldos no objeto `saldos`
     this.saldos = {
-      receitas: this.calculateTotal(this.receitas),
-      despesas: this.calculateTotal(this.despesas),
-      departamentos: this.calculateTotal(this.departamentos),
-      campanhas: this.calculateTotal(this.campanhas),
-      total:
-        this.calculateTotal(this.receitas) - this.calculateTotal(this.despesas),
+      receitas: receitaTotal,
+      despesas: despesaTotal,
+      departamentos: departamentoTotal,
+      campanhas: campanhaTotal,
+      total: receitaTotal - despesaTotal, // Calcular saldo total (Receitas - Despesas)
     };
+
+    console.log('Saldos atualizados:', this.saldos);
   }
+
 
   /**
    * Calcula o total de valores em uma categoria

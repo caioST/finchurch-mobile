@@ -59,9 +59,6 @@ export class FinanceService {
       map((subcategoriasPorColecao) => subcategoriasPorColecao.flat())
     );
   }
-  
-
-
 
   getSubcategoriaDetalhes(
     colecao: string,
@@ -129,6 +126,31 @@ export class FinanceService {
   
     return docRef.set(transacao); // Salva os dados fornecidos
   }
+
+  // Adicione no `FinanceService`:
+getTotalEntradas(): Observable<number> {
+  return this.getAllSubcategorias().pipe(
+    switchMap((subcategorias) =>
+      forkJoin(
+        subcategorias.map((subcategoria) =>
+          this.getSubcategoriaTransacoes(
+            subcategoria.colecao,
+            subcategoria.categoriaId,
+            subcategoria.id
+          ).pipe(
+            map((transacoes) =>
+              transacoes
+                .filter((t) => t.tipo === 'entrada')
+                .reduce((total, t) => total + t.quantia, 0)
+            )
+          )
+        )
+      )
+    ),
+    map((totais) => totais.reduce((total, t) => total + t, 0))
+  );
+}
+
   
   
 }

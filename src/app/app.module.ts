@@ -26,6 +26,7 @@ import { SubcategoriasComponent } from './shared/components/subcategorias/subcat
 import { ResumoSubcategoriaComponent } from './shared/components/resumo-categoria/resumo-categoria.component';
 import { AdicionarValorComponent } from './shared/components/adicionar-valor/adicionar-valor.component';
 
+
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
@@ -34,7 +35,7 @@ import { AdicionarValorComponent } from './shared/components/adicionar-valor/adi
     CategoriasComponent,
     SubcategoriasComponent,
     AdicionarValorComponent,
-    ResumoSubcategoriaComponent
+    ResumoSubcategoriaComponent,
   ],
   imports: [
     BrowserModule, 
