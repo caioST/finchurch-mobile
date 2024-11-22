@@ -16,10 +16,7 @@
   <div class="categoria-list">
     
     <!-- Categorias de Receitas -->
-    <div 
-    *ngFor="let receita of receitas" 
-    class="categoria-card" 
-    (click)="selecionarCategoria(receita.id, 'receitas')">
+    <div *ngFor="let receita of receitas" class="categoria-card" (click)="selecionarCategoria(receita.id, 'receitas')">
         <ion-icon *ngIf="receita.icone" [name]="receita.icone"></ion-icon>
         <div class="categoria-nome">{{ receita.nome }}</div>
     </div>
