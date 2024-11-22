@@ -19,7 +19,7 @@ export class ResumoSubcategoriaComponent implements OnInit {
     private route: ActivatedRoute,
     public router: Router,
     private financeService: FinanceService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Obtem os parâmetros da rota e carrega os detalhes da subcategoria
@@ -28,6 +28,7 @@ export class ResumoSubcategoriaComponent implements OnInit {
       this.categoriaId = params['categoriaId'];
       this.subcategoriaId = params['subcategoriaId'];
       this.carregarResumo();
+      this.carregarSaldos();
     });
 
     // Atualiza transações quando o usuário volta da tela de adicionar
@@ -37,18 +38,10 @@ export class ResumoSubcategoriaComponent implements OnInit {
   }
 
   carregarResumo(): void {
-
     this.financeService
       .getSubcategoriaDetalhes(this.colecao, this.categoriaId, this.subcategoriaId)
       .subscribe({
-        next: (subcategoria) => {
-          if (subcategoria) {
-            console.log('Subcategoria encontrada:', subcategoria);
-            this.subcategoria = subcategoria;
-          } else {
-            console.warn(`Subcategoria ${this.subcategoriaId} não encontrada na coleção ${this.colecao}`);
-          }
-        },
+        next: (subcategoria) => (this.subcategoria = subcategoria),
         error: (error) => console.error('Erro ao carregar subcategoria:', error),
       });
   }
@@ -61,22 +54,19 @@ export class ResumoSubcategoriaComponent implements OnInit {
         next: (transacoes) => {
           console.log('Transações encontradas:', transacoes);
           this.historico = transacoes;
-          this.calcularSaldos(); // Recalcula saldos com base no histórico atualizado
+          this.carregarSaldos(); // Recalcula saldos com base no histórico atualizado
         },
         error: (error) => console.error('Erro ao carregar transações:', error),
       });
   }
 
-  calcularSaldos(): void {
-    const entradas = this.historico
-      .filter((transacao) => transacao.tipo === 'entrada' && transacao.quantia > 0) // Validação de tipo e valor
-      .reduce((total, transacao) => total + transacao.quantia, 0);
-  
-    const saidas = this.historico
-      .filter((transacao) => transacao.tipo === 'saida' && transacao.quantia > 0) // Validação de tipo e valor
-      .reduce((total, transacao) => total + transacao.quantia, 0);
-  
-    this.saldos = { entradas, saidas }; // Atualiza os saldos
+  carregarSaldos(): void {
+    this.financeService
+      .calcularSaldos(this.colecao, this.categoriaId, this.subcategoriaId)
+      .subscribe({
+        next: (saldos) => (this.saldos = saldos),
+        error: (error) => console.error('Erro ao carregar saldos:', error),
+      });
   }
 
   adicionarValor(): void {
