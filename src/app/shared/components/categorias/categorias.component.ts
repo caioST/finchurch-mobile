@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirestoreService } from 'src/app/core/services/firestore.service';
+import { FinanceService } from 'src/app/core/services/finance.service';
 import { combineLatest } from 'rxjs';
 import { AlertController } from '@ionic/angular';
 
@@ -25,6 +26,7 @@ export class CategoriasComponent implements OnInit {
   constructor(
     private router: Router,
     private firestoreService: FirestoreService,
+    private financeService: FinanceService,
     private alertController: AlertController
   ) {}
 
@@ -46,7 +48,7 @@ export class CategoriasComponent implements OnInit {
       this.despesas = despesas;
       this.departamentos = departamentos;
       this.campanhas = campanhas;
-      this.calculateSaldos();
+      this.calculateSaldos(); // Calcula os saldos depois de carregar as categorias
     });
   }
 
@@ -54,17 +56,29 @@ export class CategoriasComponent implements OnInit {
    * Atualiza saldos com base nas categorias
    */
   calculateSaldos(): void {
-    this.saldos.receitas = this.calculateTotal(this.receitas);
-    this.saldos.despesas = this.calculateTotal(this.despesas);
-    this.saldos.departamentos = this.calculateTotal(this.departamentos);
-    this.saldos.campanhas = this.calculateTotal(this.campanhas);
-    this.saldos.total = this.saldos.receitas - this.saldos.despesas; // Saldo total
+    // Calcular o saldo de cada categoria utilizando o método de cálculo no service
+    this.financeService.calcularSaldoCategoria('receitas', 'receitasId').subscribe(saldo => {
+      this.saldos.receitas = saldo.entradas - saldo.saidas;
+    });
 
-    console.log('Saldos atualizados:', this.saldos);
+    this.financeService.calcularSaldoCategoria('despesas', 'despesasId').subscribe(saldo => {
+      this.saldos.despesas = saldo.entradas - saldo.saidas;
+    });
+
+    this.financeService.calcularSaldoCategoria('departamentos', 'departamentosId').subscribe(saldo => {
+      this.saldos.departamentos = saldo.entradas - saldo.saidas;
+    });
+
+    this.financeService.calcularSaldoCategoria('campanhas', 'campanhasId').subscribe(saldo => {
+      this.saldos.campanhas = saldo.entradas - saldo.saidas;
+    });
+
+    // Atualizar saldo total (somando ou subtraindo conforme o caso)
+    this.saldos.total = this.saldos.receitas - this.saldos.despesas;
   }
 
   /**
-   * Calcula o total de valores de uma coleção de categorias
+   * Método para calcular o total de valores de uma coleção de categorias
    */
   calculateTotal(categorias: any[]): number {
     return categorias.reduce((total, categoria) => total + (categoria.quantia || 0), 0);

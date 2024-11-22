@@ -66,10 +66,9 @@ export class SubcategoriasComponent implements OnInit {
 
   selecionarSubcategoria(subcategoriaId: string): void {
     this.router.navigate([
-      `/subcategoria/${this.colecao}/${this.categoriaId}/${subcategoriaId}`
+      `/subcategoria/${this.colecao}/${this.categoriaId}/${subcategoriaId}`,
     ]);
   }
-  
   
 
   voltar(): void {

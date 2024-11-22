@@ -141,21 +141,54 @@ export class FinanceService {
     );
   }
 
+  // Método para calcular o saldo total de uma categoria (soma de todos os saldos das subcategorias)
+  calcularSaldoCategoria(colecao: string, categoriaId: string): Observable<{ entradas: number; saidas: number }> {
+    return this.getSubcategoriasFromCategoria(colecao, categoriaId).pipe(
+      switchMap((subcategorias) => {
+        const saldos$ = subcategorias.map((subcategoria) =>
+          this.calcularSaldos(colecao, categoriaId, subcategoria.id) // Calcular o saldo de cada subcategoria
+        );
+        return forkJoin(saldos$).pipe(
+          map((saldos) => {
+            const entradasTotal = saldos.reduce((total, saldo) => total + saldo.entradas, 0);
+            const saidasTotal = saldos.reduce((total, saldo) => total + saldo.saidas, 0);
+            console.log('Entradas totais: ', entradasTotal);
+            console.log('Saídas totais: ', saidasTotal);
+            return { entradas: entradasTotal, saidas: saidasTotal };
+          })
+        );
+      })
+    );
+  }
 
-
-  // Método para obter transações de uma subcategoria
-  getSubcategoriaTransacoes(
-    colecao: string,
-    categoriaId: string,
-    subcategoriaId: string
-  ): Observable<any[]> {
+  // Método auxiliar para obter todas as subcategorias de uma categoria
+  getSubcategoriasFromCategoria(colecao: string, categoriaId: string): Observable<any[]> {
     return this.firestore
       .collection(colecao)
       .doc(categoriaId)
       .collection('subcolecao')
-      .doc(subcategoriaId)
-      .collection('transacoes')
-      .valueChanges();
+      .valueChanges({ idField: 'id' });
   }
+
+
+
+
+  // Método para obter transações de uma subcategoria
+// Verifique também o método que retorna as transações:
+getSubcategoriaTransacoes(colecao: string, categoriaId: string, subcategoriaId: string): Observable<any[]> {
+  return this.firestore
+    .collection(colecao)
+    .doc(categoriaId)
+    .collection('subcolecao')
+    .doc(subcategoriaId)
+    .collection('transacoes')
+    .valueChanges()
+    .pipe(
+      map(transacoes => {
+        console.log('Transações encontradas:', transacoes); // Log para debugar as transações
+        return transacoes;
+      })
+    );
+}
 
 }
