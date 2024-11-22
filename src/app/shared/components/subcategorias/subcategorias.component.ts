@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FinanceService } from 'src/app/core/services/finance.service';
 import { forkJoin } from 'rxjs';
 import { NavigationEnd } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-subcategorias',
@@ -13,18 +14,19 @@ export class SubcategoriasComponent implements OnInit {
   subcategorias: any[] = [];
   categoriaId: string = '';
   colecao: string = '';
-  historico: any[] = []; // Histórico agregado de todas as subcategorias
+  historico: any[] = [];
   saldos: { entradas: number; saidas: number; total: number; despesas: number } = {
     entradas: 0,
     saidas: 0,
     total: 0,
     despesas: 0,
-  }; // Saldo acumulado
+  };
 
   constructor(
     private route: ActivatedRoute,
     private financeService: FinanceService,
-    private router: Router
+    private router: Router,
+    private navController: NavController
   ) {}
 
   ngOnInit() {
@@ -106,12 +108,12 @@ export class SubcategoriasComponent implements OnInit {
   }
 
   selecionarSubcategoria(subcategoriaId: string): void {
-    this.router.navigate([
+    this.navController.navigateBack([
       `/subcategoria/${this.colecao}/${this.categoriaId}/${subcategoriaId}`,
     ]);
   }
 
   voltar(): void {
-    this.router.navigate(['/categorias']);
+    this.navController.navigateBack(['/categorias']);
   }
 }

@@ -30,6 +30,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'relatorios',
+    loadChildren: () => import('./features/relatorios/relatorios.module').then( m => m.RelatoriosPageModule)
+  },
+
+  {
     path: 'register',
     loadChildren: () => import('./features/register/register.module').then(m => m.RegisterPageModule)
   },
@@ -68,6 +73,15 @@ const routes: Routes = [
     path: 'subcategoria/:colecao/:categoriaId/:subcategoriaId/adicionar', 
     component: AdicionarValorComponent 
   },
+ 
+  {
+    path: 'relatorios',
+    loadChildren: () =>
+      import('./features/relatorios/relatorios.module').then((m) => m.RelatoriosPageModule),
+  },
+  
+
+  
 ];
 
 @NgModule({

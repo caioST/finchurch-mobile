@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, combineLatest } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { NavController } from '@ionic/angular';
+import { Observable, combineLatest, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { FinanceService } from 'src/app/core/services/finance.service'; // Importando o serviço
 
 interface Categoria {
   id: string;
@@ -36,16 +37,15 @@ export class CategoriasComponent implements OnInit {
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private financeService: FinanceService,
+    private navController: NavController
   ) { }
 
   ngOnInit(): void {
     this.loadCategorias();
   }
 
-  /**
-   * Carrega categorias de todas as coleções
-   */
   loadCategorias(): void {
     combineLatest([
       this.getCategoriasFromFirestore('receitas'),
@@ -56,7 +56,7 @@ export class CategoriasComponent implements OnInit {
       .pipe(
         catchError((error) => {
           console.error('Erro ao carregar categorias:', error);
-          return of([[], [], [], []]); // Retorna valores vazios em caso de erro
+          return of([[], [], [], []]);
         })
       )
       .subscribe(([receitas, despesas, departamentos, campanhas]) => {
@@ -64,8 +64,24 @@ export class CategoriasComponent implements OnInit {
         this.despesas = despesas;
         this.departamentos = departamentos;
         this.campanhas = campanhas;
-        this.calculateSaldos();
+
       });
+  }
+
+  // Método para obter as subcategorias de cada tipo de categoria
+  getSubcategorias(tipo: string): string[] {
+    switch (tipo) {
+      case 'receitas':
+        return ['Dízimos', 'Doações', 'Ofertas']; // Exemplo de subcategorias
+      case 'despesas':
+        return ['Salário']; // Exemplo de subcategoria
+      case 'departamentos':
+        return ['EBD', 'Juventude', 'Missões']; // Exemplo de subcategorias
+      case 'campanhas':
+        return ['Construção', 'Igreja', 'Ministérios', 'Social']; // Exemplo de subcategorias
+      default:
+        return [];
+    }
   }
 
   /**
@@ -76,59 +92,31 @@ export class CategoriasComponent implements OnInit {
       .collection<Categoria>(colecao)
       .valueChanges({ idField: 'id' })
       .pipe(
-        map((categorias) => categorias || []), // Garante que nunca retorne `null`
+        map((categorias) => categorias || []),
         catchError((error) => {
           console.error(`Erro ao obter categorias de ${colecao}:`, error);
-          return of([]); // Retorna array vazio em caso de erro
+          return of([]);
         })
       );
-  }
-
-  /**
-   * Atualiza saldos com base nas categorias e subcategorias
-   */
-  calculateSaldos(): void {
-    const receitaTotal = this.calculateTotal(this.receitas);
-    const despesaTotal = this.calculateTotal(this.despesas);
-    const departamentoTotal = this.calculateTotal(this.departamentos);
-    const campanhaTotal = this.calculateTotal(this.campanhas);
-
-    // Atualiza os saldos no objeto `saldos`
-    this.saldos = {
-      receitas: receitaTotal,
-      despesas: despesaTotal,
-      departamentos: departamentoTotal,
-      campanhas: campanhaTotal,
-      total: receitaTotal - despesaTotal, // Calcular saldo total (Receitas - Despesas)
-    };
-
-    console.log('Saldos atualizados:', this.saldos);
-  }
-
-
-  /**
-   * Calcula o total de valores em uma categoria
-   */
-  calculateTotal(categorias: Categoria[]): number {
-    return categorias.reduce(
-      (total, categoria) => total + (categoria.quantia || 0),
-      0
-    );
   }
 
   /**
    * Redireciona para a página de subcategorias
    */
   selecionarCategoria(categoriaId: string, colecao: string): void {
-    this.router.navigate([`/subcategorias`, categoriaId, colecao]);
+    this.navController.navigateBack([`/subcategorias`, categoriaId, colecao]);
   }
 
   voltar(): void {
-    this.router.navigate(['']);
+    this.navController.navigateBack(['']);
+  }
+
+  relatorios(): void {
+    this.navController.navigateBack(['/relatorios']);
   }
 
   abrirNotificacoes(): void {
-    this.router.navigate(['/notificacoes']);
+    this.navController.navigateBack(['/notificacoes']);
   }
 
   /**
@@ -198,8 +186,7 @@ export class CategoriasComponent implements OnInit {
       .collection('categorias')
       .add(categoria)
       .then(() => {
-        console.log('Categoria adicionada com sucesso.');
-        this.loadCategorias();
+        console.log('Categoria adicionada com sucesso');
       })
       .catch((error) => {
         console.error('Erro ao adicionar categoria:', error);
