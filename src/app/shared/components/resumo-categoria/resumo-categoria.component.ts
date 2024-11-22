@@ -77,6 +77,11 @@ export class ResumoSubcategoriaComponent implements OnInit {
   }
 
   voltar(): void {
-    this.router.navigate([`/subcategorias/${this.colecao}/${this.categoriaId}`]);
+    this.router.navigate([`/subcategorias/${this.categoriaId}/${this.colecao}`], {
+      queryParams: { reload: true }
+    });
   }
+  
+  
+  
 }

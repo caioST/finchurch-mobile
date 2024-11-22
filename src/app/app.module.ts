@@ -25,6 +25,7 @@ import { ErrorHandler } from './core/services/error-handler.service';
 import { SubcategoriasComponent } from './shared/components/subcategorias/subcategorias.component';
 import { ResumoSubcategoriaComponent } from './shared/components/resumo-categoria/resumo-categoria.component';
 import { AdicionarValorComponent } from './shared/components/adicionar-valor/adicionar-valor.component';
+import { FirestoreService } from './core/services/firestore.service';
 
 
 @NgModule({
@@ -49,7 +50,7 @@ import { AdicionarValorComponent } from './shared/components/adicionar-valor/adi
     HttpClientModule,
     RouterModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FingerprintAIO, FinanceService, ErrorHandler],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FingerprintAIO, FinanceService, ErrorHandler, FirestoreService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

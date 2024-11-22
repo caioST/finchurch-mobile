@@ -46,7 +46,7 @@ export class LoginPage {
           fingerprintNeedsRevalidation: true
         });
         console.log('Usuário logado, impressão digital marcada para revalidação');
-        this.navCtrl.navigateForward('/saldo-total'); 
+        this.navCtrl.navigateForward('/categorias'); 
       }
     } catch (error) {
       console.error('Erro de login:', error);
@@ -102,7 +102,7 @@ export class LoginPage {
         disableBackup: true,
       });
       if (result) {
-        this.navCtrl.navigateForward('/access'); 
+        this.navCtrl.navigateForward('/categorias'); 
       }
     } catch (error) {
       console.error('Erro ao autenticar com impressão digital:', error);

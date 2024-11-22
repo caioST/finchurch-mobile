@@ -55,11 +55,6 @@ const routes: Routes = [
   },
 
   { 
-    path: 'subcategorias/:colecao/:categoriaId', 
-    component: SubcategoriasComponent 
-  },
-
-  { 
     path: 'subcategoria/:colecao/:categoriaId/:subcategoriaId', 
     component: ResumoSubcategoriaComponent 
   },

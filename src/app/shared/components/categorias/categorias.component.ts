@@ -1,19 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FirestoreService } from 'src/app/core/services/firestore.service';
+import { combineLatest } from 'rxjs';
 import { AlertController } from '@ionic/angular';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, combineLatest } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs';
-
-interface Categoria {
-  id: string;
-  nome: string;
-  tipo: string;
-  quantia: number;
-  icone?: string;
-  subcategorias?: string[];
-}
 
 @Component({
   selector: 'app-categorias',
@@ -21,10 +10,10 @@ interface Categoria {
   styleUrls: ['./categorias.component.scss'],
 })
 export class CategoriasComponent implements OnInit {
-  receitas: Categoria[] = [];
-  despesas: Categoria[] = [];
-  departamentos: Categoria[] = [];
-  campanhas: Categoria[] = [];
+  receitas: any[] = [];
+  despesas: any[] = [];
+  departamentos: any[] = [];
+  campanhas: any[] = [];
   saldos = {
     total: 0,
     receitas: 0,
@@ -35,9 +24,9 @@ export class CategoriasComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private alertController: AlertController,
-    private firestore: AngularFirestore
-  ) { }
+    private firestoreService: FirestoreService,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit(): void {
     this.loadCategorias();
@@ -48,77 +37,39 @@ export class CategoriasComponent implements OnInit {
    */
   loadCategorias(): void {
     combineLatest([
-      this.getCategoriasFromFirestore('receitas'),
-      this.getCategoriasFromFirestore('despesas'),
-      this.getCategoriasFromFirestore('departamentos'),
-      this.getCategoriasFromFirestore('campanhas'),
-    ])
-      .pipe(
-        catchError((error) => {
-          console.error('Erro ao carregar categorias:', error);
-          return of([[], [], [], []]); // Retorna valores vazios em caso de erro
-        })
-      )
-      .subscribe(([receitas, despesas, departamentos, campanhas]) => {
-        this.receitas = receitas;
-        this.despesas = despesas;
-        this.departamentos = departamentos;
-        this.campanhas = campanhas;
-        this.calculateSaldos();
-      });
+      this.firestoreService.getCategorias('receitas'),
+      this.firestoreService.getCategorias('despesas'),
+      this.firestoreService.getCategorias('departamentos'),
+      this.firestoreService.getCategorias('campanhas'),
+    ]).subscribe(([receitas, despesas, departamentos, campanhas]) => {
+      this.receitas = receitas;
+      this.despesas = despesas;
+      this.departamentos = departamentos;
+      this.campanhas = campanhas;
+      this.calculateSaldos();
+    });
   }
 
   /**
-   * Obtém categorias de uma coleção Firestore
-   */
-  getCategoriasFromFirestore(colecao: string): Observable<Categoria[]> {
-    return this.firestore
-      .collection<Categoria>(colecao)
-      .valueChanges({ idField: 'id' })
-      .pipe(
-        map((categorias) => categorias || []), // Garante que nunca retorne `null`
-        catchError((error) => {
-          console.error(`Erro ao obter categorias de ${colecao}:`, error);
-          return of([]); // Retorna array vazio em caso de erro
-        })
-      );
-  }
-
-  /**
-   * Atualiza saldos com base nas categorias e subcategorias
+   * Atualiza saldos com base nas categorias
    */
   calculateSaldos(): void {
-    const receitaTotal = this.calculateTotal(this.receitas);
-    const despesaTotal = this.calculateTotal(this.despesas);
-    const departamentoTotal = this.calculateTotal(this.departamentos);
-    const campanhaTotal = this.calculateTotal(this.campanhas);
-
-    // Atualiza os saldos no objeto `saldos`
-    this.saldos = {
-      receitas: receitaTotal,
-      despesas: despesaTotal,
-      departamentos: departamentoTotal,
-      campanhas: campanhaTotal,
-      total: receitaTotal - despesaTotal, // Calcular saldo total (Receitas - Despesas)
-    };
+    this.saldos.receitas = this.calculateTotal(this.receitas);
+    this.saldos.despesas = this.calculateTotal(this.despesas);
+    this.saldos.departamentos = this.calculateTotal(this.departamentos);
+    this.saldos.campanhas = this.calculateTotal(this.campanhas);
+    this.saldos.total = this.saldos.receitas - this.saldos.despesas; // Saldo total
 
     console.log('Saldos atualizados:', this.saldos);
   }
 
-
   /**
-   * Calcula o total de valores em uma categoria
+   * Calcula o total de valores de uma coleção de categorias
    */
-  calculateTotal(categorias: Categoria[]): number {
-    return categorias.reduce(
-      (total, categoria) => total + (categoria.quantia || 0),
-      0
-    );
+  calculateTotal(categorias: any[]): number {
+    return categorias.reduce((total, categoria) => total + (categoria.quantia || 0), 0);
   }
 
-  /**
-   * Redireciona para a página de subcategorias
-   */
   selecionarCategoria(categoriaId: string, colecao: string): void {
     this.router.navigate([`/subcategorias`, categoriaId, colecao]);
   }
@@ -163,46 +114,15 @@ export class CategoriasComponent implements OnInit {
     await alert.present();
   }
 
-  /**
-   * Valida e processa os dados de uma nova categoria
-   */
   handleSalvarCategoria(data: any): boolean {
-    if (!data.nome || !data.nome.trim()) {
-      console.error('Nome da categoria é obrigatório.');
-      return false;
-    }
-
     const subcategorias = data.subcategorias
-      ? data.subcategorias
-        .split(',')
-        .map((s: string) => s.trim())
-        .filter(Boolean)
+      ? data.subcategorias.split(',').map((s: string) => s.trim()).filter(Boolean)
       : [];
+    
+    this.firestoreService.adicionarCategoria('categorias', data.nome, subcategorias).then(() => {
+      this.loadCategorias(); // Recarrega categorias após adicionar
+    });
 
-    this.adicionarCategoriaFirebase(data.nome, subcategorias);
     return true;
-  }
-
-  /**
-   * Adiciona uma nova categoria ao Firestore
-   */
-  adicionarCategoriaFirebase(nome: string, subcategorias: string[]): void {
-    const categoria: Omit<Categoria, 'id'> = {
-      nome,
-      subcategorias,
-      tipo: 'personalizada',
-      quantia: 0,
-    };
-
-    this.firestore
-      .collection('categorias')
-      .add(categoria)
-      .then(() => {
-        console.log('Categoria adicionada com sucesso.');
-        this.loadCategorias();
-      })
-      .catch((error) => {
-        console.error('Erro ao adicionar categoria:', error);
-      });
   }
 }

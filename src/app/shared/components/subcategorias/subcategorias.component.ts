@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FinanceService } from 'src/app/core/services/finance.service';
+import { FirestoreService } from 'src/app/core/services/firestore.service';
 import { forkJoin } from 'rxjs';
-import { NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-subcategorias',
@@ -13,103 +12,65 @@ export class SubcategoriasComponent implements OnInit {
   subcategorias: any[] = [];
   categoriaId: string = '';
   colecao: string = '';
-  historico: any[] = []; // Histórico agregado de todas as subcategorias
-  saldos: { entradas: number; saidas: number; total: number; despesas: number } = {
-    entradas: 0,
-    saidas: 0,
-    total: 0,
-    despesas: 0,
-  }; // Saldo acumulado
+  historico: any[] = [];
+  saldos = { entradas: 0, saidas: 0, total: 0, despesas: 0 };
 
   constructor(
     private route: ActivatedRoute,
-    private financeService: FinanceService,
+    private firestoreService: FirestoreService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
-    // Substituímos o carregamento inicial para acompanhar os eventos de navegação
     this.route.params.subscribe((params) => {
       this.categoriaId = params['categoriaId'];
       this.colecao = params['colecao'];
     });
-  
-    // Recarregar dados sempre que o usuário voltar para esta página
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
+
+    // Recarregar subcategorias
+    this.carregarSubcategorias();
+
+    // Subscrição para garantir que, ao voltar, a página seja recarregada
+    this.route.queryParams.subscribe(params => {
+      if (params['reload']) {
         this.carregarSubcategorias();
       }
     });
-  
-    // Carregamento inicial
-    this.carregarSubcategorias();
   }
 
+
   carregarSubcategorias(): void {
-    // Carrega todas as subcategorias relacionadas à categoria atual
-    this.financeService.getAllSubcategorias().subscribe({
-      next: (subcategorias) => {
-        this.subcategorias = subcategorias.filter(
-          (sub) => sub.categoriaId === this.categoriaId && sub.colecao === this.colecao
-        );
-        if (this.subcategorias.length > 0) {
-          this.carregarTransacoes(); // Carrega transações após carregar subcategorias
-        } else {
-          console.warn('Nenhuma subcategoria encontrada para esta categoria.');
-        }
-      },
-      error: (error) => console.error('Erro ao carregar subcategorias:', error),
+    this.firestoreService.getSubcategorias(this.categoriaId, this.colecao).subscribe((subcategorias) => {
+      console.log('Subcategorias recebidas:', subcategorias); // Verifique no console se as subcategorias estão sendo carregadas
+      this.subcategorias = subcategorias || []; // Defina um array vazio caso não haja dados
+      this.carregarTransacoes();
     });
   }
 
   carregarTransacoes(): void {
-    const transacaoObservables = this.subcategorias.map((subcategoria) =>
-      this.financeService
-        .getSubcategoriaTransacoes(this.colecao, this.categoriaId, subcategoria.id)
-    );
-
-    // Combina todas as transações das subcategorias
-    forkJoin(transacaoObservables).subscribe({
-      next: (transacoesArray) => {
-        // Verifica se o array está preenchido
-        if (transacoesArray.length > 0) {
-          this.historico = transacoesArray.flat();
-          console.log('Histórico carregado:', this.historico);
-          this.calcularSaldos(); // Calcula os saldos com base no histórico
-        } else {
-          console.warn('Nenhuma transação encontrada.');
-        }
-      },
-      error: (error) => console.error('Erro ao carregar transações:', error),
-    });
+    if (this.subcategorias.length > 0) {
+      const transacaoObservables = this.subcategorias.map((subcategoria) =>
+        this.firestoreService.getTransacoes(this.colecao, this.categoriaId, subcategoria.id)
+      );
+      forkJoin(transacaoObservables).subscribe((transacoes) => {
+        this.historico = transacoes;
+        this.calcularSaldos();
+      });
+    }
   }
 
   calcularSaldos(): void {
-    const entradas = this.historico
-      .filter((transacao) => transacao.tipo === 'entrada' && transacao.quantia > 0)
-      .reduce((total, transacao) => total + transacao.quantia, 0);
-
-    const saidas = this.historico
-      .filter((transacao) => transacao.tipo === 'saida' && transacao.quantia > 0)
-      .reduce((total, transacao) => total + transacao.quantia, 0);
-
-    const despesas = saidas; // Despesas são as saídas
-    const total = entradas - despesas;
-
-    // Logs para verificar os valores
-    console.log('Entradas:', entradas);
-    console.log('Saídas:', saidas);
-    console.log('Despesas:', despesas);
-    console.log('Total:', total);
-
-    this.saldos = { entradas, saidas, total, despesas };
+    // Calcular totais com base nas transações
+    console.log('Saldos calculados:', this.saldos);
   }
 
   selecionarSubcategoria(subcategoriaId: string): void {
     this.router.navigate([
-      `/subcategoria/${this.colecao}/${this.categoriaId}/${subcategoriaId}`,
+      `/subcategoria/${this.colecao}/${this.categoriaId}/${subcategoriaId}`
     ]);
   }
+  
+  
 
   voltar(): void {
     this.router.navigate(['/categorias']);
