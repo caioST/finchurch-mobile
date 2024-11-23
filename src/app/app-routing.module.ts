@@ -30,6 +30,12 @@ const routes: Routes = [
   },
 
   {
+    path: 'profile',
+    loadChildren: () => import('./features/profile/profile.module').then(m => m.ProfilePageModule)
+  },
+  
+
+  {
     path: 'relatorios',
     loadChildren: () => import('./features/relatorios/relatorios.module').then( m => m.RelatoriosPageModule)
   },
@@ -74,6 +80,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/relatorios/relatorios.module').then((m) => m.RelatoriosPageModule),
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./features/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+
   
 
   

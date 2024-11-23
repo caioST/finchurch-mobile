@@ -1,0 +1,97 @@
+.profile-content {
+    --background: #00D09E; /* Fundo verde */
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    height: 100vh;
+    overflow: auto; /* Permite rolagem se necessário */
+}
+
+ion-header {
+    background-color: #00D09E; /* Cor do cabeçalho */
+    color: white; /* Cor do texto */
+    box-shadow: none;
+}
+  
+ion-toolbar {
+    --background: #00D09E; /* Cor do fundo do toolbar */
+    box-shadow: none;
+
+    ion-title {
+        color: #052224;
+        font-weight: bold;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+    }
+}
+
+.profile-header {
+    text-align: center;
+    margin-top: 20px;
+  
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 2px solid #00cc99;
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+      margin: 10px 0 5px;
+      color: #333;
+    }
+  
+    p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+  
+    small {
+      font-size: 0.8rem;
+      color: #888;
+    }
+  }
+  
+  ion-list {
+    margin-top: 20px;
+  
+    ion-item {
+      --background: #f9f9f9;
+      --color: #333;
+  
+      &:hover {
+        --background: #e8f7f1;
+      }
+  
+      ion-icon {
+        color: #00cc99;
+      }
+    }
+  }
+
+  .nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    ion-toolbar {
+        --background: #DFF7E2;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        border-top: 1px solid #dcdcdc;
+
+        ion-buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+
+            ion-icon {
+                font-size: 1.6rem;
+                color: #333;
+            }
+        }
+    }
+}
+  

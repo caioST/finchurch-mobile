@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile-content">
+  <div class="profile-header">
+    <img [src]="userPhoto" alt="User Photo" />
+    <h2>{{ userName }}</h2>
+    <p>{{ userEmail }}</p>
+    <small>ID do Usuário: {{ userUID }}</small>
+  </div>
+
+  <ion-list>
+    <ion-item button>
+      <ion-icon slot="start" name="person-outline"></ion-icon>
+      <ion-label>Editar Perfil</ion-label>
+    </ion-item>
+    <ion-item button>
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-label>Segurança</ion-label>
+    </ion-item>
+    <ion-item button>
+      <ion-icon slot="start" name="settings-outline"></ion-icon>
+      <ion-label>Configurações</ion-label>
+    </ion-item>
+    <ion-item button>
+      <ion-icon slot="start" name="help-circle-outline"></ion-icon>
+      <ion-label>Suporte</ion-label>
+    </ion-item>
+    <ion-item button (click)="confirmLogout()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      <ion-label>Sair</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<!-- Barra de navegação inferior -->
+<ion-footer class="nav-footer">
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button>
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="analytics-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="albums-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

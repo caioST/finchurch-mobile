@@ -115,6 +115,10 @@ export class CategoriasComponent implements OnInit {
     this.navController.navigateBack(['/relatorios']);
   }
 
+  perfil(): void {
+    this.navController.navigateBack(['/profile']);
+  }
+
   abrirNotificacoes(): void {
     this.navController.navigateBack(['/notificacoes']);
   }
