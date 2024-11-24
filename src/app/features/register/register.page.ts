@@ -45,7 +45,6 @@ export class RegisterPage {
 
   // Método assíncrono para registrar um novo usuário
   async register() {
-    // Verificação se os termos foram aceitos
     if (!this.termsAccepted) {
       const toast = await this.toastCtrl.create({
         message: 'Você precisa aceitar os Termos de Uso antes de continuar.',
@@ -56,7 +55,6 @@ export class RegisterPage {
       return;
     }
 
-    // Verificação do formulário de registro
     if (!this.registerForm.valid) {
       const toast = await this.toastCtrl.create({
         message: 'Por favor, preencha todos os campos corretamente.',
@@ -67,26 +65,41 @@ export class RegisterPage {
       return;
     }
 
-    // Capturando os valores do formulário
-    const email = this.registerForm.get('email')?.value as string; // Captura o valor do e-mail
-    const password = this.registerForm.get('password')?.value as string; // Captura o valor da senha
+    const email = this.registerForm.get('email')?.value as string;
+    const password = this.registerForm.get('password')?.value as string;
+    const fullName = this.registerForm.get('fullName')?.value as string;
+    const cpf = this.registerForm.get('cpf')?.value as string;
+    const phone = this.registerForm.get('phone')?.value as string;
+    const birthDate = this.registerForm.get('birthDate')?.value as string;
 
     try {
-      // Cria um novo usuário com e-mail e senha (senha em texto simples, Firebase irá criptografar)
-      await this.afAuth.createUserWithEmailAndPassword(email, password);
+      // Criando o usuário no Authentication
+      const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
+
+      // Salvando os dados adicionais no Firestore
+      await this.firestore.collection('usuarios').doc(userCredential.user?.uid).set({
+        fullName: fullName,
+        cpf: cpf,
+        email: email,
+        phone: phone,
+        birthDate: birthDate,
+        createdAt: new Date().toISOString()
+      });
+
       const toast = await this.toastCtrl.create({
         message: 'Conta criada com sucesso!',
         duration: 2000,
         color: 'success'
       });
       toast.present();
-      this.navCtrl.navigateForward('/fingerprint-authentication'); // Navega para a próxima página
+
+      this.navCtrl.navigateForward('/fingerprint-authentication');
 
     } catch (error) {
-      // Lida com erros durante a criação do usuário
       this.errorHandler.handleError(error);
     }
   }
+
 
   // Método para redirecionar para a página de login
   goToLogin() {

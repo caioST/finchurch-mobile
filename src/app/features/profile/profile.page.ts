@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { AuthService } from 'src/app/core/services/auth.service';// Serviço Firebase
+import { AuthService } from 'src/app/core/services/auth.service';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -9,25 +9,37 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  userName: string = ''; // Nome do usuário
-  userEmail: string = ''; // E-mail do usuário
-  userUID: string = ''; // UID do usuário
-  userPhoto: string = 'assets/person.icon.png'; // Ícone padrão
+  // Variáveis para exibir os dados do perfil
+  userName: string = ''; // Nome completo
+  userEmail: string = ''; // Email
+  userUID: string = ''; // UID
+  userCPF: string = ''; // CPF
+  userPhone: string = ''; // Telefone
+  userBirthDate: string = ''; // Data de nascimento
+  userPhoto: string = 'assets/person-icon.png'; // Foto padrão
 
   constructor(
     private alertCtrl: AlertController,
-    private authService: AuthService, // Serviço Firebase
+    private authService: AuthService,
     private navController: NavController
   ) {}
 
   ngOnInit() {
-    // Observa o estado de autenticação do Firebase
-    this.authService.getAuthState().subscribe((user) => {
-      if (user) {
-        this.userEmail = user.email || 'Não informado';
-        this.userUID = user.uid || 'Não informado';
-        this.userName = user.displayName || 'Usuário';
-        this.userPhoto = user.photoURL || 'assets/person-icon.png'; // Usa foto padrão se não houver
+    // Observa o estado de autenticação e dados do Firestore
+    this.authService.getCompleteUserProfile().subscribe((userProfile) => {
+      if (userProfile) {
+        // Authentication (email e UID)
+        this.userEmail = userProfile.email || 'Não informado';
+        this.userUID = userProfile.uid || 'Não informado';
+
+        // Firestore (dados adicionais)
+        this.userName = userProfile.fullName || 'Usuário';
+        this.userCPF = userProfile.cpf || 'Não informado';
+        this.userPhone = userProfile.phone || 'Não informado';
+        this.userBirthDate = userProfile.birthDate || 'Não informado';
+
+        // Foto (padrão se não estiver salva)
+        this.userPhoto = userProfile.photoURL || 'assets/person-icon.png';
       }
     });
   }
@@ -50,11 +62,23 @@ export class ProfilePage implements OnInit {
     await alert.present();
   }
 
+  goToEditProfile() {
+    this.navController.navigateForward('/editar-perfil');
+  }
+
+  goToCategorias() {
+    this.navController.navigateForward('/categorias');
+  }
+
+  relatorios() {
+    this.navController.navigateForward('/relatorios');
+  }
+
   logout() {
     this.authService.logout().then(() => {
       console.log('Logout realizado com sucesso');
       // Redireciona para a tela de login
-      this.navController.navigateBack(['/login'])
+      this.navController.navigateBack(['/login']);
     });
   }
 }

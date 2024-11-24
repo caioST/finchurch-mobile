@@ -16,7 +16,7 @@
   </div>
 
   <ion-list>
-    <ion-item button>
+    <ion-item button (click)="goToEditProfile()">
       <ion-icon slot="start" name="person-outline"></ion-icon>
       <ion-label>Editar Perfil</ion-label>
     </ion-item>
@@ -43,13 +43,13 @@
 <ion-footer class="nav-footer">
   <ion-toolbar>
     <ion-buttons>
-      <ion-button>
+      <ion-button (click)="goToCategorias()">
         <ion-icon name="home-outline"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button (click)="relatorios()">
         <ion-icon name="analytics-outline"></ion-icon>
       </ion-button>
-      <ion-button>
+      <ion-button (click)="goToCategorias()">
         <ion-icon name="albums-outline"></ion-icon>
       </ion-button>
       <ion-button>

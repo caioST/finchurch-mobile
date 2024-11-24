@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Editar Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <!-- Campo de Nome -->
+    <ion-item>
+      <ion-label position="stacked">Nome</ion-label>
+      <ion-input 
+        [(ngModel)]="userData.name" 
+        placeholder="Digite seu nome"></ion-input>
+    </ion-item>
+
+    <!-- Campo de Celular -->
+    <ion-item>
+      <ion-label position="stacked">Celular</ion-label>
+      <ion-input 
+        [(ngModel)]="userData.phone" 
+        placeholder="Digite seu celular" 
+        (ngModelChange)="onPhoneChange($event)" 
+        type="tel"
+        pattern="[0-9]{10,11}"></ion-input>
+    </ion-item>
+
+    <!-- Campo de E-mail -->
+    <ion-item>
+      <ion-label position="stacked">E-mail</ion-label>
+      <ion-input 
+        [(ngModel)]="userData.email" 
+        placeholder="Digite seu e-mail" 
+        (ngModelChange)="onEmailChange($event)" 
+        type="email"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <!-- Botões de Ação -->
+  <div class="action-buttons">
+    <ion-button 
+      expand="block" 
+      color="primary" 
+      [disabled]="!isEmailChanged && !isPhoneChanged" 
+      (click)="sendConfirmationCode()">
+      Enviar Código de Confirmação
+    </ion-button>
+  </div>
+
+  <!-- Campo de Código de Confirmação (exibido se aguardando) -->
+  <div *ngIf="awaitingConfirmation">
+    <ion-list>
+      <ion-item>
+        <ion-label position="stacked">Código de Confirmação</ion-label>
+        <ion-input 
+          [(ngModel)]="confirmationCode" 
+          placeholder="Digite o código"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <!-- Botão para confirmar e atualizar os dados -->
+    <div class="action-buttons">
+      <ion-button 
+        expand="block" 
+        color="success" 
+        [disabled]="!confirmationCode" 
+        (click)="confirmAndUpdate()">
+        Confirmar e Atualizar
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

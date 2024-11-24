@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { RelatorioService } from 'src/app/core/services/relatorio.service';
 import { FinanceService } from 'src/app/core/services/finance.service';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import { FileOpener } from '@ionic-native/file-opener/ngx';  // Importar o FileOpener
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+
 
 @Component({
   selector: 'app-relatorios',
@@ -77,39 +78,52 @@ export class RelatoriosPage implements OnInit {
 
     // Junta os dados em formato CSV
     const csvContent = [header, ...rows].map(row => row.join(',')).join('\n');
+    console.log('Conteúdo do CSV gerado:', csvContent);  // Log do conteúdo do CSV
     return csvContent;
   }
 
   baixarCSV(csvContent: string) {
-    const filename = 'relatorio.csv';
+    const filename = `relatorio_${new Date().toISOString()}.csv`;
 
-    // Salvar o arquivo no armazenamento público
     Filesystem.writeFile({
-      path: filename,
+      path: `documents/${filename}`,
       data: csvContent,
-      directory: Directory.ExternalStorage,  // Salvar no armazenamento externo
+      directory: Directory.Documents,
       encoding: Encoding.UTF8,
     })
-      .then(async () => {
+      .then(async (writeResult) => {
         alert('Relatório salvo com sucesso!');
-        // Após salvar o arquivo, abrir automaticamente
-        await this.abrirArquivo(filename);
+        console.log('Relatório salvo:', writeResult.uri);
+        // Abrir o arquivo após salvá-lo
+        await this.abrirArquivo(writeResult.uri);
       })
       .catch((error) => {
-        console.error('Erro ao salvar o arquivo:', error);
-        alert('Falha ao salvar o relatório.');
+        // Verificando explicitamente o tipo de erro
+        if (error instanceof Error) {
+          console.error('Erro ao salvar o arquivo:', error.message);
+          alert(`Falha ao salvar o relatório. Detalhes: ${error.message}`);
+        } else {
+          console.error('Erro desconhecido ao salvar o arquivo:', error);
+          alert('Ocorreu um erro desconhecido ao tentar salvar o arquivo.');
+        }
       });
   }
 
-  // Função para abrir o arquivo salvo
-  async abrirArquivo(filename: string) {
+  async abrirArquivo(fileUri: string) {
     try {
-      const filePath = '/storage/emulated/0/' + filename;  // Caminho do arquivo no armazenamento
-      await this.fileOpener.open(filePath, 'application/csv');  // Abrir o arquivo
-      console.log('Arquivo aberto com sucesso!');
-    } catch (e) {
-      console.error('Erro ao abrir o arquivo:', e);
-      alert('Não foi possível abrir o arquivo.');
+      await this.fileOpener.open(fileUri, 'text/csv');
+      console.log('Arquivo CSV aberto com sucesso!');
+    } catch (error) {
+      // Verificando explicitamente o tipo de erro
+      if (error instanceof Error) {
+        console.error('Erro ao abrir o arquivo:', error.message);
+        alert(`Não foi possível abrir o arquivo. Detalhes: ${error.message}`);
+      } else {
+        console.error('Erro desconhecido ao abrir o arquivo:', error);
+        alert('Ocorreu um erro desconhecido ao tentar abrir o arquivo.');
+      }
     }
   }
+
+
 }

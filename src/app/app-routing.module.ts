@@ -83,7 +83,11 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./features/profile/profile.module').then( m => m.ProfilePageModule)
+  },  {
+    path: 'editar-perfil',
+    loadChildren: () => import('./features/editar-perfil/editar-perfil.module').then( m => m.EditarPerfilPageModule)
   },
+
 
   
 
