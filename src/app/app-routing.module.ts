@@ -48,6 +48,11 @@ const routes: Routes = [
     path: 'fingerprint-authentication',
     loadChildren: () => import('./features/fingerprint-authentication/fingerprint-authentication.module').then(m => m.FingerprintAuthenticationPageModule)
   },
+  
+  {
+    path: 'profile',
+    loadChildren: () => import('./features/profile/profile.module').then( m => m.ProfilePageModule)
+  },
 
   {
     path: 'categorias',
@@ -68,12 +73,7 @@ const routes: Routes = [
     path: 'subcategoria/:colecao/:categoriaId/:subcategoriaId/adicionar', 
     component: AdicionarValorComponent 
   },
- 
-  {
-    path: 'relatorios',
-    loadChildren: () =>
-      import('./features/relatorios/relatorios.module').then((m) => m.RelatoriosPageModule),
-  },
+
   
 
   

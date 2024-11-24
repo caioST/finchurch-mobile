@@ -3,8 +3,10 @@ import { RelatorioService } from 'src/app/core/services/relatorio.service';
 import { FinanceService } from 'src/app/core/services/finance.service';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { FileOpener } from '@ionic-native/file-opener/ngx';  // Importar o FileOpener
+import { NavController } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
 const { Permissions } = Plugins;
+
 
 @Component({
   selector: 'app-relatorios',
@@ -18,7 +20,8 @@ export class RelatoriosPage implements OnInit {
   constructor(
     private relatorioService: RelatorioService,
     private financeService: FinanceService,
-    private fileOpener: FileOpener  // Adicionando o FileOpener
+    private fileOpener: FileOpener, // Adicionando o FileOpener
+    private navController: NavController
   ) { }
 
   ngOnInit() {
@@ -166,6 +169,10 @@ export class RelatoriosPage implements OnInit {
         error instanceof Error ? error.message : JSON.stringify(error);
       alert(`Não foi possível abrir o arquivo. Detalhes: ${mensagemErro}`);
     }
+  }
+
+  perfil(): void {
+    this.navController.navigateBack(['/profile']);
   }
 
 
