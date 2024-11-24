@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
 
@@ -50,7 +51,7 @@ import { RelatorioService } from './core/services/relatorio.service';
     HttpClientModule,
     RouterModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FingerprintAIO, FinanceService, ErrorHandler, RelatorioService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FingerprintAIO, FinanceService, ErrorHandler, RelatorioService, FileOpener],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
