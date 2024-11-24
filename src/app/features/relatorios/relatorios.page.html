@@ -2,30 +2,30 @@
   <ion-toolbar>
     <ion-title>Gerar Relatórios</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/categorias"></ion-back-button>
+      <ion-icon name="arrow-back"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="page-relatorios">
+
   <ion-card class="relatorios-list">
-    <ion-card-header>
-      <ion-card-title>Selecione uma Subcategoria para Gerar Relatório</ion-card-title>
+    <ion-card-header class="header-title">
+      <ion-card-title>Selecione um Relatório</ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
-      <ion-list>
-        <ion-item *ngFor="let subcategoria of subcategorias">
-          <ion-label>
-            {{ subcategoria.nome }}
-          </ion-label>
-          <ion-button slot="end" (click)="gerarRelatorio(subcategoria)">
-            Gerar Relatório
-          </ion-button>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
+    <!-- Iteração diretamente com ion-item -->
+    <ion-item *ngFor="let subcategoria of subcategorias" >
+      <ion-label>
+        {{ subcategoria.nome }}
+      </ion-label>
+      <ion-button slot="end" (click)="gerarRelatorio(subcategoria)">
+        Gerar Relatório
+      </ion-button>
+    </ion-item>
+
   </ion-card>
+
 </ion-content>
 
 <!-- Barra de navegação inferior -->
@@ -58,5 +58,5 @@
   duration="2000"
   position="top"
   color="success"
-  (ionToastDidDismiss)="showToast = false"
-></ion-toast>
+  (ionToastDidDismiss)="showToast = false">
+</ion-toast>

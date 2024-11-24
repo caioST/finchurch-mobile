@@ -34,6 +34,7 @@
     "@ionic-native/file-opener": "^5.36.0",
     "@ionic-native/fingerprint-aio": "^5.36.0",
     "@ionic/angular": "^8.4.0",
+    "cordova-plugin-file-opener2": "^4.0.0",
     "cordova-plugin-fingerprint-aio": "^6.0.0",
     "firebase": "^10.14.1",
     "googleapis": "^144.0.0",
