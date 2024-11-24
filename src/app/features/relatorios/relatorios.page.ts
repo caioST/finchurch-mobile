@@ -3,6 +3,8 @@ import { RelatorioService } from 'src/app/core/services/relatorio.service';
 import { FinanceService } from 'src/app/core/services/finance.service';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { Plugins } from '@capacitor/core';
+const { Permissions } = Plugins;
 
 
 @Component({
@@ -26,6 +28,13 @@ export class RelatoriosPage implements OnInit {
       next: (data) => (this.subcategorias = data),
       error: (err) => console.error('Erro ao carregar subcategorias:', err),
     });
+  }
+
+  async solicitarPermissaoArmazenamento() {
+    const result = await Permissions['request']({ name: 'MANAGE_EXTERNAL_STORAGE' });
+    if (result.state !== 'granted') {
+      alert('Permissão para acessar o armazenamento foi negada.');
+    }
   }
 
   gerarRelatorio(subcategoria: any) {
@@ -86,28 +95,32 @@ export class RelatoriosPage implements OnInit {
     const filename = `relatorio_${new Date().toISOString()}.csv`;
 
     Filesystem.writeFile({
-      path: `documents/${filename}`,
+      path: filename, // Apenas o nome do arquivo, sem subdiretórios
+      directory: Directory.Data,
       data: csvContent,
-      directory: Directory.Documents,
       encoding: Encoding.UTF8,
     })
       .then(async (writeResult) => {
         alert('Relatório salvo com sucesso!');
         console.log('Relatório salvo:', writeResult.uri);
-        // Abrir o arquivo após salvá-lo
-        await this.abrirArquivo(writeResult.uri);
+
+        // Obter o URI completo para o arquivo
+        const uri = await Filesystem.getUri({
+          path: filename,
+          directory: Directory.Documents,
+        });
+
+        console.log('URI do arquivo gerado:', uri.uri);
+        // Abrir o arquivo após salvar
+        await this.abrirArquivo(uri.uri);
       })
       .catch((error) => {
-        // Verificando explicitamente o tipo de erro
-        if (error instanceof Error) {
-          console.error('Erro ao salvar o arquivo:', error.message);
-          alert(`Falha ao salvar o relatório. Detalhes: ${error.message}`);
-        } else {
-          console.error('Erro desconhecido ao salvar o arquivo:', error);
-          alert('Ocorreu um erro desconhecido ao tentar salvar o arquivo.');
-        }
+        console.error('Erro ao salvar o arquivo:', error);
+        alert('Falha ao salvar o relatório. Detalhes: ' + (error.message || error));
       });
   }
+
+
 
   async abrirArquivo(fileUri: string) {
     try {
