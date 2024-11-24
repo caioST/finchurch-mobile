@@ -74,6 +74,10 @@ export class ProfilePage implements OnInit {
     this.navController.navigateForward('/relatorios');
   }
 
+  goToConfiguration() {
+    this.navController.navigateForward('/configuration');
+  }
+
   logout() {
     this.authService.logout().then(() => {
       console.log('Logout realizado com sucesso');

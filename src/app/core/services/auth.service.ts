@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import * as emailjs from 'emailjs-com';
 import { Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { getAuth, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,7 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore
-  ) {}
+  ) { }
 
   getAuthState(): Observable<any> {
     return this.afAuth.authState;
@@ -36,7 +37,6 @@ export class AuthService {
           confirmation_code: code,
         };
 
-        // Verifica se o envio foi bem-sucedido
         const response = await emailjs.send(
           this.emailServiceId,
           this.emailTemplateId,
@@ -77,7 +77,6 @@ export class AuthService {
     return true;
   }
 
-  // Atualizando e-mail com verificação do Firebase
   async updateEmailWithVerification(newEmail: string): Promise<void> {
     const user = await this.afAuth.currentUser;
     if (!user) throw new Error('Usuário não autenticado.');
@@ -86,18 +85,14 @@ export class AuthService {
       throw new Error('O novo e-mail é igual ao e-mail atual.');
     }
 
-    // Reautentica o usuário
     try {
-      await user.getIdTokenResult(true); // Força a reautenticação
+      await user.getIdTokenResult(true); // Reautentica o usuário
     } catch (error) {
       throw new Error('Sua sessão expirou. Por favor, faça login novamente.');
     }
 
-    // Atualiza o e-mail no Firebase
     await user.updateEmail(newEmail);
     console.log('E-mail atualizado para:', newEmail);
-
-    // Envia o e-mail de verificação após a atualização do e-mail
     await user.sendEmailVerification();
     console.log('E-mail de verificação enviado para:', newEmail);
   }
@@ -162,5 +157,24 @@ export class AuthService {
 
   logout() {
     return this.afAuth.signOut();
+  }
+
+  async deleteUser(password: string): Promise<void> {
+    const auth = getAuth(); // Obtém a instância do auth
+    const user = auth.currentUser;
+
+    if (!user) throw new Error('Usuário não autenticado.');
+
+    // Criando as credenciais de reautenticação
+    const credential = EmailAuthProvider.credential(user.email!, password);
+
+    // Reautenticação com as credenciais
+    await reauthenticateWithCredential(user, credential);
+
+    // Excluindo dados do usuário no Firestore
+    await this.firestore.collection('usuarios').doc(user.uid).delete();
+
+    // Excluindo usuário do Firebase Auth
+    await user.delete();
   }
 }

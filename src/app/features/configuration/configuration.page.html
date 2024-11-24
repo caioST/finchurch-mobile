@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="voltar()">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-buttons>
+    <ion-title>Configuração da Conta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="configuration-content">
+  <ion-list class="container">
+    <ion-item button (click)="goToResetPassword()" lines="none">
+      <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+      <ion-label>Alterar Senha</ion-label>
+    </ion-item>
+
+    <ion-item button (click)="goToDeleteAccount()" lines="none">
+      <ion-icon slot="start" name="trash-outline"></ion-icon>
+      <ion-label>Excluir Conta</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

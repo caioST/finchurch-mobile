@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Excluir Conta</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="delete-content">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Tem Certeza De Que Deseja Excluir Sua Conta?</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>
+        Esta ação excluirá permanentemente todos os seus dados e você não poderá
+        recuperá-los. Tenha em mente:
+      </p>
+      <ul>
+        <li>Todas as suas despesas, receitas e transações associadas serão eliminadas.</li>
+        <li>Você não poderá acessar sua conta ou qualquer informação relacionada.</li>
+        <li>Esta ação não pode ser desfeita.</li>
+      </ul>
+      <ion-item>
+        <ion-label position="floating">Senha</ion-label>
+        <ion-input type="password" [(ngModel)]="password"></ion-input>
+      </ion-item>
+
+      <div class="button">
+        <ion-button expand="block" (click)="showDeleteConfirmation()" class="delete-button">
+          Excluir Conta
+        </ion-button>
+        <ion-button expand="block" (click)="goToConfiguration()" class="cancel-button">
+          Cancelar
+        </ion-button>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<!-- Barra de navegação inferior -->
+<ion-footer class="nav-footer">
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button>
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="analytics-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="albums-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
