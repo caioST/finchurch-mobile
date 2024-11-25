@@ -4,37 +4,37 @@
     <form [formGroup]="registerForm" (ngSubmit)="register()">
       <!-- Campos do formulário -->
       <ion-item lines="none" class="input-field">
-        <ion-label class="input-label">Nome Completo</ion-label>
+        <ion-label class="input-label" position="stacked">Nome Completo</ion-label>
         <ion-input formControlName="fullName" type="text" placeholder="José Silva"></ion-input>
       </ion-item>
 
       <ion-item lines="none" class="input-field">
-        <ion-label class="input-label">CPF</ion-label>
+        <ion-label class="input-label" position="stacked">CPF</ion-label>
         <ion-input formControlName="cpf" type="text" placeholder="123.456.789-00"></ion-input>
       </ion-item>
 
       <ion-item lines="none" class="input-field">
-        <ion-label class="input-label">E-mail</ion-label>
+        <ion-label class="input-label" position="stacked">E-mail</ion-label>
         <ion-input formControlName="email" type="email" placeholder="exemplo@exemplo.com"></ion-input>
       </ion-item>
 
       <ion-item lines="none" class="input-field">
-        <ion-label class="input-label">Telefone Celular</ion-label>
+        <ion-label class="input-label" position="stacked">Telefone Celular</ion-label>
         <ion-input formControlName="phone" type="tel" placeholder="(21) 12345-6789"></ion-input>
       </ion-item>
 
       <ion-item lines="none" class="input-field">
-        <ion-label class="input-label">Data de Nascimento</ion-label>
+        <ion-label class="input-label" position="stacked">Data de Nascimento</ion-label>
         <ion-input formControlName="birthDate" type="date"></ion-input>
       </ion-item>
 
       <ion-item lines="none" class="input-field">
-        <ion-label class="input-label">Senha</ion-label>
+        <ion-label class="input-label" position="stacked">Senha</ion-label>
         <ion-input formControlName="password" type="password" placeholder="****"></ion-input>
       </ion-item>
 
       <ion-item lines="none" class="input-field">
-        <ion-label class="input-label">Confirmar Senha</ion-label>
+        <ion-label class="input-label" position="stacked">Confirmar Senha</ion-label>
         <ion-input formControlName="confirmPassword" type="password" placeholder="****"></ion-input>
       </ion-item>
 
