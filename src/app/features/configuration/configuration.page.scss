@@ -1,6 +1,6 @@
 .configuration-content {
     --background: #00D09E;
-     display: flex;
+    display: flex;
     flex-direction: column;
     padding: 16px;
     height: 100vh;
@@ -57,6 +57,29 @@ ion-toolbar {
             color: #00cc99;
         }
     }
+}
 
+.nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 
+    ion-toolbar {
+        --background: #DFF7E2;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        border-top: 1px solid #dcdcdc;
+
+        ion-buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+
+            ion-icon {
+                font-size: 1.6rem;
+                color: #333;
+            }
+        }
+    }
 }

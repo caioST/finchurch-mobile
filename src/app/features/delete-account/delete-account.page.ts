@@ -71,8 +71,25 @@ export class DeleteAccountPage {
     }
   }
 
+  home() {
+    this.navCtrl.navigateForward('/home');
+  }
+
+  relatorios() {
+    this.navCtrl.navigateForward('/relatorios');
+  }
+
+  categorias() {
+    this.navCtrl.navigateForward('/categorias');
+  }
+
+  perfil() {
+    this.navCtrl.navigateForward('/profile');
+  }
+
   goToConfiguration() {
     this.navCtrl.navigateForward('/configuration');
   }
+
 
 }

@@ -4,7 +4,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable, forkJoin, of } from 'rxjs';
 import { map, catchError, switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 
 @Injectable({
@@ -187,6 +186,48 @@ export class FinanceService {
       .doc(subcategoriaId)
       .collection('transacoes')
       .valueChanges();
+  }
+
+  /* Obtém o total de todas as transações */
+  obterTotalTransacoes(): Observable<number> {
+    return this.firestore
+      .collection('transacoes')
+      .valueChanges()
+      .pipe(
+        map((transacoes: any[]) =>
+          transacoes.reduce(
+            (total, transacao) =>
+              total +
+              (transacao.tipo === 'entrada' ? transacao.valor : -transacao.valor),
+            0
+          )
+        ),
+        catchError((error) => {
+          console.error('Erro ao obter total de transações:', error);
+          return of(0); // Retorna 0 no caso de erro
+        })
+      );
+  }
+
+  /* Obtém o histórico de todas as transações */
+  obterHistoricoTransacoes(): Observable<any[]> {
+    return this.firestore
+      .collection('transacoes')
+      .valueChanges()
+      .pipe(
+        map((transacoes: any[]) =>
+          transacoes.map((transacao) => ({
+            descricao: transacao.descricao || '',
+            valor: transacao.valor || 0,
+            data: transacao.data ? transacao.data.toDate() : null,
+            tipo: transacao.tipo || 'indefinido',
+          }))
+        ),
+        catchError((error) => {
+          console.error('Erro ao obter histórico de transações:', error);
+          return of([]); // Retorna lista vazia no caso de erro
+        })
+      );
   }
 
 }

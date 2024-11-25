@@ -13,6 +13,22 @@ export class ConfigurationPage {
     this.navCtrl.navigateForward('/reset-password');
   }
 
+  home() {
+    this.navCtrl.navigateForward('/home');
+  }
+
+  perfil() {
+    this.navCtrl.navigateForward('/profile');
+  }
+
+  relatorios() {
+    this.navCtrl.navigateForward('/relatorios');
+  }
+
+  categorias() {
+    this.navCtrl.navigateForward('/categorias');
+  }
+
   goToDeleteAccount() {
     this.navCtrl.navigateForward('/delete-account');
   }

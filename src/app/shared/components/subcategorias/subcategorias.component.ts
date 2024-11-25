@@ -27,7 +27,7 @@ export class SubcategoriasComponent implements OnInit {
     private financeService: FinanceService,
     private router: Router,
     private navController: NavController
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Substituímos o carregamento inicial para acompanhar os eventos de navegação
@@ -35,14 +35,14 @@ export class SubcategoriasComponent implements OnInit {
       this.categoriaId = params['categoriaId'];
       this.colecao = params['colecao'];
     });
-  
+
     // Recarregar dados sempre que o usuário voltar para esta página
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.carregarSubcategorias();
       }
     });
-  
+
     // Carregamento inicial
     this.carregarSubcategorias();
   }
@@ -77,7 +77,6 @@ export class SubcategoriasComponent implements OnInit {
         if (transacoesArray.length > 0) {
           this.historico = transacoesArray.flat();
           console.log('Histórico carregado:', this.historico);
-          this.calcularSaldos(); // Calcula os saldos com base no histórico
         } else {
           console.warn('Nenhuma transação encontrada.');
         }
@@ -86,25 +85,20 @@ export class SubcategoriasComponent implements OnInit {
     });
   }
 
-  calcularSaldos(): void {
-    const entradas = this.historico
-      .filter((transacao) => transacao.tipo === 'entrada' && transacao.quantia > 0)
-      .reduce((total, transacao) => total + transacao.quantia, 0);
+  home(): void {
+    this.navController.navigateBack(['/home']);
+  }
 
-    const saidas = this.historico
-      .filter((transacao) => transacao.tipo === 'saida' && transacao.quantia > 0)
-      .reduce((total, transacao) => total + transacao.quantia, 0);
+  relatorios(): void {
+    this.navController.navigateBack(['/relatorios']);
+  }
 
-    const despesas = saidas; // Despesas são as saídas
-    const total = entradas - despesas;
+  categorias(): void {
+    this.navController.navigateBack(['/categorias']);
+  }
 
-    // Logs para verificar os valores
-    console.log('Entradas:', entradas);
-    console.log('Saídas:', saidas);
-    console.log('Despesas:', despesas);
-    console.log('Total:', total);
-
-    this.saldos = { entradas, saidas, total, despesas };
+  perfil(): void {
+    this.navController.navigateBack(['/profile']);
   }
 
   selecionarSubcategoria(subcategoriaId: string): void {

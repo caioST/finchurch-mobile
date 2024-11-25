@@ -83,4 +83,20 @@ export class ResumoSubcategoriaComponent implements OnInit {
       queryParams: { reload: true }
     });
   }
+
+  home(): void {
+    this.navController.navigateBack(['/home']);
+  }
+
+  relatorios(): void {
+    this.navController.navigateBack(['/relatorios']);
+  }
+
+  categorias(): void {
+    this.navController.navigateBack(['/categorias']);
+  }
+
+  perfil(): void {
+    this.navController.navigateBack(['/profile']);
+  }
 }

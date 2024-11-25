@@ -12,7 +12,7 @@ export class ResetPasswordPage {
   email: string = ''; // Armazenamento do e-mail do usuário
 
   constructor(
-    private navCtrl: NavController,
+    private navController: NavController,
     private toastCtrl: ToastController,
     private afAuth: AngularFireAuth,
     private firestore: AngularFirestore // Adiciona o Firestore ao construtor
@@ -51,7 +51,7 @@ export class ResetPasswordPage {
       toast.present();
 
       // Navegar de volta para a página de login
-      this.navCtrl.navigateBack('/login');
+      this.navController.navigateBack('/login');
     } catch (error: any) { // Aqui fazemos a afirmação de tipo
       // Em caso de erro, exibe uma mensagem de erro ao usuário
       const message = error.code === 'auth/missing-email' ?
@@ -67,9 +67,25 @@ export class ResetPasswordPage {
     }
   }
 
+  home(): void {
+    this.navController.navigateBack(['/home']);
+  }
+
+  relatorios(): void {
+    this.navController.navigateBack(['/relatorios']);
+  }
+
+  categorias(): void {
+    this.navController.navigateBack(['/categorias']);
+  }
+
+  perfil(): void {
+    this.navController.navigateBack(['/profile']);
+  }
+
   // Navegar até a página de login
   goToLogin() {
-    this.navCtrl.navigateForward('/profile', {
+    this.navController.navigateForward('/profile', {
       animated: true,
       animationDirection: 'forward'
     });
