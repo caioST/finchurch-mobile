@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FinanceService } from 'src/app/core/services/finance.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-resumo-categoria',
@@ -18,7 +19,8 @@ export class ResumoSubcategoriaComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     public router: Router,
-    private financeService: FinanceService
+    private financeService: FinanceService,
+    private navController: NavController
   ) { }
 
   ngOnInit(): void {
@@ -71,17 +73,30 @@ export class ResumoSubcategoriaComponent implements OnInit {
 
   adicionarValor(): void {
     // Navega para a tela de adicionar valor na subcategoria
-    this.router.navigate([
+    this.navController.navigateBack([
       `/subcategoria/${this.colecao}/${this.categoriaId}/${this.subcategoriaId}/adicionar`,
     ]);
   }
 
   voltar(): void {
-    this.router.navigate([`/subcategorias/${this.categoriaId}/${this.colecao}`], {
+    this.navController.navigateBack([`/subcategorias/${this.categoriaId}/${this.colecao}`], {
       queryParams: { reload: true }
     });
   }
-  
-  
-  
+
+  home(): void {
+    this.navController.navigateBack(['/home']);
+  }
+
+  relatorios(): void {
+    this.navController.navigateBack(['/relatorios']);
+  }
+
+  categorias(): void {
+    this.navController.navigateBack(['/categorias']);
+  }
+
+  perfil(): void {
+    this.navController.navigateBack(['/profile']);
+  }
 }

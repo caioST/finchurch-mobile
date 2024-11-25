@@ -30,6 +30,11 @@ const routes: Routes = [
   },
 
   {
+    path: 'relatorios',
+    loadChildren: () => import('./features/relatorios/relatorios.module').then( m => m.RelatoriosPageModule)
+  },
+
+  {
     path: 'register',
     loadChildren: () => import('./features/register/register.module').then(m => m.RegisterPageModule)
   },
@@ -42,6 +47,11 @@ const routes: Routes = [
   {
     path: 'fingerprint-authentication',
     loadChildren: () => import('./features/fingerprint-authentication/fingerprint-authentication.module').then(m => m.FingerprintAuthenticationPageModule)
+  },
+  
+  {
+    path: 'profile',
+    loadChildren: () => import('./features/profile/profile.module').then( m => m.ProfilePageModule)
   },
 
   {
@@ -63,6 +73,27 @@ const routes: Routes = [
     path: 'subcategoria/:colecao/:categoriaId/:subcategoriaId/adicionar', 
     component: AdicionarValorComponent 
   },
+  {
+    path: 'configuration',
+    loadChildren: () => import('./features/configuration/configuration.module').then( m => m.ConfigurationPageModule)
+  },
+  {
+    path: 'delete-account',
+    loadChildren: () => import('./features/delete-account/delete-account.module').then( m => m.DeleteAccountPageModule)
+  },  {
+    path: 'reset-password',
+    loadChildren: () => import('./features/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./features/home/home.module').then( m => m.HomePageModule)
+  },
+
+
+
+  
+
+  
 ];
 
 @NgModule({

@@ -11,57 +11,34 @@
 </ion-header>
 
 <ion-content class="page-categorias">
-  <!-- Header de saldo -->
-  <div class="saldo-header">
-    <div class="saldo-info">
-      <div class="saldo-titulo">
-        <ion-icon name="wallet"></ion-icon>
-        <div class="titulo">Saldo Total</div>
-        <div class="valor">R$ {{ saldos.total | number: '1.2-2' }}</div>
-      </div>
-      <div class="despesa-titulo">
-        <ion-icon name="card"></ion-icon>
-        <div class="titulo">Despesa Total</div>
-        <div class="valor">-R$ {{ saldos.despesas | number: '1.2-2' }}</div>
-      </div>
-    </div>
-    <div class="progress-bar">
-      <ion-progress-bar
-        [value]="saldos.receitas + saldos.despesas > 0 ? (saldos.despesas / (saldos.receitas + saldos.despesas)) : 0">
-      </ion-progress-bar>
-      <div class="progress-text">
-        {{ (saldos.receitas + saldos.despesas > 0 ? (saldos.despesas / (saldos.receitas + saldos.despesas)) * 100 : 0) |
-        number: '1.0-0' }}%
-        das suas despesas, parece bom
-      </div>
-    </div>
-  </div>
 
   <!-- Lista de Categorias -->
   <div class="categoria-list">
-    
+
     <!-- Categorias de Receitas -->
     <div *ngFor="let receita of receitas" class="categoria-card" (click)="selecionarCategoria(receita.id, 'receitas')">
-        <ion-icon *ngIf="receita.icone" [name]="receita.icone"></ion-icon>
-        <div class="categoria-nome">{{ receita.nome }}</div>
+      <ion-icon *ngIf="receita.icone" [name]="receita.icone"></ion-icon>
+      <div class="categoria-nome">{{ receita.nome }}</div>
     </div>
 
     <!-- Categorias de Despesas -->
     <div *ngFor="let despesa of despesas" class="categoria-card" (click)="selecionarCategoria(despesa.id, 'despesas')">
-        <ion-icon *ngIf="despesa.icone" [name]="despesa.icone"></ion-icon>
-        <div class="categoria-nome">{{ despesa.nome }}</div>
+      <ion-icon *ngIf="despesa.icone" [name]="despesa.icone"></ion-icon>
+      <div class="categoria-nome">{{ despesa.nome }}</div>
     </div>
 
     <!-- Categorias de Departamentos -->
-    <div *ngFor="let departamento of departamentos" class="categoria-card" (click)="selecionarCategoria(departamento.id, 'departamentos')">
-        <ion-icon *ngIf="departamento.icone" [name]="departamento.icone"></ion-icon>
-        <div class="categoria-nome">{{ departamento.nome }}</div>
+    <div *ngFor="let departamento of departamentos" class="categoria-card"
+      (click)="selecionarCategoria(departamento.id, 'departamentos')">
+      <ion-icon *ngIf="departamento.icone" [name]="departamento.icone"></ion-icon>
+      <div class="categoria-nome">{{ departamento.nome }}</div>
     </div>
 
     <!-- Categorias de Campanhas -->
-    <div *ngFor="let campanha of campanhas" class="categoria-card" (click)="selecionarCategoria(campanha.id, 'campanhas')">
-        <ion-icon *ngIf="campanha.icone" [name]="campanha.icone"></ion-icon>
-        <div class="categoria-nome">{{ campanha.nome }}</div>
+    <div *ngFor="let campanha of campanhas" class="categoria-card"
+      (click)="selecionarCategoria(campanha.id, 'campanhas')">
+      <ion-icon *ngIf="campanha.icone" [name]="campanha.icone"></ion-icon>
+      <div class="categoria-nome">{{ campanha.nome }}</div>
     </div>
 
     <!-- Card para adicionar nova categoria -->
@@ -76,21 +53,23 @@
 <ion-footer class="nav-footer">
   <ion-toolbar>
     <ion-buttons>
-      <ion-button>
+
+      <ion-button (click)="home()">
         <ion-icon name="home-outline"></ion-icon>
       </ion-button>
-      <ion-button>
+
+      <ion-button (click)="relatorios()">
         <ion-icon name="analytics-outline"></ion-icon>
       </ion-button>
-      <ion-button>
-        <ion-icon name="swap-horizontal-outline"></ion-icon>
-      </ion-button>
-      <ion-button>
+
+      <ion-button (click)="categorias()">
         <ion-icon name="albums-outline"></ion-icon>
       </ion-button>
-      <ion-button>
+
+      <ion-button (click)="perfil()">
         <ion-icon name="person-outline"></ion-icon>
       </ion-button>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

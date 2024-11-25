@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FinanceService } from 'src/app/core/services/finance.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-adicionar-valor',
@@ -23,8 +24,9 @@ export class AdicionarValorComponent implements OnInit {
   constructor(
     private financeService: FinanceService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private navController: NavController
+  ) { }
 
   ngOnInit(): void {
     // Obtém os parâmetros de rota para vincular com a subcategoria
@@ -60,7 +62,23 @@ export class AdicionarValorComponent implements OnInit {
       this.router.navigate([`/subcategoria/${this.colecao}/${this.categoriaId}/${this.subcategoriaId}`]);
     } catch (error) {
       console.error('Erro ao adicionar transação:', error);
-      
+
     }
+  }
+
+  home(): void {
+    this.navController.navigateBack(['/home']);
+  }
+
+  relatorios(): void {
+    this.navController.navigateBack(['/relatorios']);
+  }
+
+  categorias(): void {
+    this.navController.navigateBack(['/categorias']);
+  }
+
+  perfil(): void {
+    this.navController.navigateBack(['/profile']);
   }
 }

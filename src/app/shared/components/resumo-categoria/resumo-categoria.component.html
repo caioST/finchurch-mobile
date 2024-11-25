@@ -27,19 +27,9 @@
 
   </div>
 
-  <!-- Barra de Progresso -->
-  <div class="progresso">
-    <ion-progress-bar
-      value="0.4"
-      color="success"
-      class="barra-progresso"
-    ></ion-progress-bar>
-    <span>40% - 30% de Suas Despesas, Parece Bom.</span>
-  </div>
-
   <!-- Histórico de Transações -->
   <ion-list class="historico-list">
-    <ion-item-divider>
+    <ion-item-divider class="historico-title">
       <ion-label>Histórico de Transações</ion-label>
     </ion-item-divider>
     <ion-item *ngFor="let transacao of historico">
@@ -70,24 +60,27 @@
 
 </ion-content>
 
+<!-- Barra de navegação inferior -->
 <ion-footer class="nav-footer">
   <ion-toolbar>
     <ion-buttons>
-      <ion-button>
+
+      <ion-button (click)="home()">
         <ion-icon name="home-outline"></ion-icon>
       </ion-button>
-      <ion-button>
+
+      <ion-button (click)="relatorios()">
         <ion-icon name="analytics-outline"></ion-icon>
       </ion-button>
-      <ion-button>
-        <ion-icon name="swap-horizontal-outline"></ion-icon>
-      </ion-button>
-      <ion-button>
+
+      <ion-button (click)="categorias()">
         <ion-icon name="albums-outline"></ion-icon>
       </ion-button>
-      <ion-button>
+
+      <ion-button (click)="perfil()">
         <ion-icon name="person-outline"></ion-icon>
       </ion-button>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

@@ -8,22 +8,6 @@
 </ion-header>
 
 <ion-content class="page-subcategorias">
-  <!-- Header de saldo -->
-  <div class="saldo-header">
-    <div class="saldo-info">
-      <div class="saldo-titulo">
-        <ion-icon name="wallet"></ion-icon>
-        <div class="titulo">Saldo Total</div>
-        <div class="valor">R$ {{ saldos.entradas | number: '1.2-2' }}</div>
-      </div>
-
-      <div class="despesa-titulo">
-        <ion-icon name="card"></ion-icon>
-        <div class="titulo">Despesa Total</div>
-        <div class="valor">-R$ {{ saldos.saidas | number: '1.2-2' }}</div>
-      </div>
-    </div>
-  </div>
 
   <!-- Lista de Subcategorias -->
   <div class="categoria-list" *ngIf="subcategorias.length > 0; else noData">
@@ -46,21 +30,23 @@
 <ion-footer class="nav-footer">
   <ion-toolbar>
     <ion-buttons>
-      <ion-button>
+
+      <ion-button (click)="home()">
         <ion-icon name="home-outline"></ion-icon>
       </ion-button>
-      <ion-button>
+
+      <ion-button (click)="relatorios()">
         <ion-icon name="analytics-outline"></ion-icon>
       </ion-button>
-      <ion-button>
-        <ion-icon name="swap-horizontal-outline"></ion-icon>
+
+      <ion-button (click)="categorias()">
+        <ion-icon name="albums-outline"></ion-icon>
       </ion-button>
-      <ion-button>
-        <ion-icon name="albums-outline" (click)="voltar()"></ion-icon>
-      </ion-button>
-      <ion-button>
+
+      <ion-button (click)="perfil()">
         <ion-icon name="person-outline"></ion-icon>
       </ion-button>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-footer>

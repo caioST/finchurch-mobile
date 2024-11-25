@@ -1,0 +1,159 @@
+.home-content {
+    --background: #00d1a0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+    padding: 0;
+}
+
+ion-header {
+    background-color: #00D09E;
+    color: white;
+    box-shadow: none;
+}
+
+ion-toolbar {
+    --background: #00D09E;
+    /* Cor do fundo do toolbar */
+    box-shadow: none;
+
+    ion-title {
+        color: #052224;
+        font-weight: bold;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+    }
+}
+
+.card-secondary {
+    --background: #F1FFF3;
+    height: 50vh;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+}
+
+.historico-header {
+    text-align: center;
+
+    .historico-title {
+        font-size: 0.9rem;
+        margin: 10px 0 5px;
+        font-weight: 600;
+        color: #363130;
+    }
+}
+
+.greeting-card {
+    margin: 15px;
+    background-color: #a7f6d1;
+    border-radius: 20px;
+
+    .welcome-title {
+        color: #052224;
+        font-weight: 500;
+
+    }
+}
+
+.greeting-card ion-card-header {
+    background-color: #6cd3b0;
+}
+
+.total-saldo {
+    text-align: center;
+    padding: 20px;
+}
+
+.total-saldo h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #F1FFF3;
+}
+
+.total-saldo ion-progress-bar {
+    margin-top: 10px;
+}
+
+.meta-card {
+    margin: 15px;
+    background-color: #b9e5d2;
+    border-radius: 20px;
+}
+
+.meta-card ion-card-header {
+    background-color: #7edfa7;
+    color: white;
+}
+
+.periodo-selecao {
+    display: flex;
+    justify-content: space-around;
+    margin: 15px;
+}
+
+.period-button {
+    --color: #093030;
+    --border-radius: 36px;
+    font-weight: bold;
+    font-size: 15px;
+    --background: #DFF7E2;
+    width: 80%;
+
+}
+
+ion-item {
+    padding: 10px 15px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+ion-item ion-label h2 {
+    font-weight: bold;
+}
+
+ion-badge {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+ion-avatar img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+
+.nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    ion-toolbar {
+        --background: #DFF7E2;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        border-top: 1px solid #dcdcdc;
+
+        ion-buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+
+            ion-icon {
+                font-size: 1.6rem;
+                color: #333;
+            }
+        }
+    }
+}

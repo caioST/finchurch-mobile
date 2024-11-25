@@ -1,0 +1,91 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>Finchurch</ion-title>
+    <ion-buttons slot="end">
+      <ion-avatar (click)="goToProfile()">
+        <img [src]="userPhoto" alt="Foto do usuário" />
+      </ion-avatar>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="home-content">
+  <!-- Saudação e saldo total -->
+  <ion-card class="greeting-card">
+    <ion-card-header>
+      <ion-card-title class="welcome-title">Olá, Bem-Vindo De Volta!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="total-saldo">
+      <div>
+        <h1>{{ totalTransacoes | currency:'BRL' }}</h1>
+        <ion-progress-bar value="0.3"></ion-progress-bar>
+        <p>30% De Suas Despesas, Parece Bom</p>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Meta de economia
+  <ion-card class="meta-card">
+    <ion-card-header>
+      <ion-card-title>Meta De Economias</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Dízimo Semanal</p>
+      <h2>R$4.000,00</h2>
+      <p>Despesa Semanal</p>
+      <h2>-R$100,00</h2>
+    </ion-card-content>
+  </ion-card>
+  -->
+
+  <!-- Histórico de Entradas e Saídas -->
+  <ion-card class="card-secondary">
+
+    <div class="periodo-selecao">
+      <ion-button class="period-button" fill="clear">Diário</ion-button>
+      <ion-button class="period-button" fill="clear">Mensal</ion-button>
+      <ion-button class="period-button" fill="clear">Anual</ion-button>
+    </div>
+
+    <ion-list-header class="historico-header">
+      <ion-label class="historico-title">Histórico de Entradas e Saídas</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor="let transacao of historicoTransacoes">
+      <ion-icon [name]="transacao.tipo === 'entrada' ? 'arrow-up' : 'arrow-down'" slot="start"></ion-icon>
+      <ion-label>
+        <h2>{{ transacao.descricao }}</h2>
+        <p>{{ transacao.data | date:'short' }}</p>
+      </ion-label>
+      <ion-badge color="success" *ngIf="transacao.tipo === 'entrada'">
+        +{{ transacao.valor | currency:'BRL' }}
+      </ion-badge>
+      <ion-badge color="danger" *ngIf="transacao.tipo === 'saida'">
+        -{{ transacao.valor | currency:'BRL' }}
+      </ion-badge>
+    </ion-item>
+  </ion-card>
+
+</ion-content>
+
+<!-- Barra de navegação inferior -->
+<ion-footer class="nav-footer">
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-button>
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="relatorios()">
+        <ion-icon name="analytics-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="categorias()">
+        <ion-icon name="albums-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="perfil()">
+        <ion-icon name="person-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

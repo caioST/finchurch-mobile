@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { FingerprintAIO } from '@ionic-native/fingerprint-aio/ngx';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
 
@@ -25,7 +26,7 @@ import { ErrorHandler } from './core/services/error-handler.service';
 import { SubcategoriasComponent } from './shared/components/subcategorias/subcategorias.component';
 import { ResumoSubcategoriaComponent } from './shared/components/resumo-categoria/resumo-categoria.component';
 import { AdicionarValorComponent } from './shared/components/adicionar-valor/adicionar-valor.component';
-import { FirestoreService } from './core/services/firestore.service';
+import { RelatorioService } from './core/services/relatorio.service';
 
 
 @NgModule({
@@ -50,7 +51,7 @@ import { FirestoreService } from './core/services/firestore.service';
     HttpClientModule,
     RouterModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FingerprintAIO, FinanceService, ErrorHandler, FirestoreService],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, FingerprintAIO, FinanceService, ErrorHandler, RelatorioService, FileOpener],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

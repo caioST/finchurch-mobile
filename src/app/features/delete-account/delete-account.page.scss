@@ -1,0 +1,121 @@
+.delete-content {
+    --background: #00d1a0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+    padding: 0;
+}
+
+ion-header {
+    background-color: #00D09E;
+    color: white;
+    box-shadow: none;
+}
+
+ion-toolbar {
+    --background: #00D09E;
+    /* Cor do fundo do toolbar */
+    box-shadow: none;
+
+    ion-title {
+        color: #052224;
+        font-weight: bold;
+        font-family: 'Poppins', sans-serif;
+        text-align: center;
+    }
+}
+
+ion-card {
+    --background: #F1FFF3;
+    height: 90vh;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+
+    ion-card-header {
+        text-align: center;
+
+        ion-card-title {
+            font-size: 20px;
+            margin: 10px 0 5px;
+            font-weight: 600;
+            color: #363130;
+        }
+    }
+}
+
+ion-card-content {
+    text-align: left;
+    font-size: 0.9rem;
+    margin: 10px 0 5px;
+    color: #363130;
+
+    ion-item {
+        --color: #093030;
+        --border-radius: 36px;
+        font-weight: bold;
+        font-size: 15px;
+
+        --background: #DFF7E2;
+        margin: 20px auto;
+    }
+
+    .button {
+
+        ion-button.delete-button {
+            --color: #093030;
+            --border-radius: 36px;
+            font-weight: bold;
+            font-size: 15px;
+            --background: #00d1a0;
+            width: 80%;
+            margin: 20px auto;
+            height: 40px;
+          }
+
+          ion-button.cancel-button {
+            --color: #093030;
+            --border-radius: 36px;
+            font-weight: bold;
+            font-size: 15px;
+            --background: #DFF7E2;
+            width: 80%;
+            margin: 20px auto;
+            height: 40px;
+          }
+    }
+}
+
+.nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    ion-toolbar {
+        --background: #DFF7E2;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        border-top: 1px solid #dcdcdc;
+
+        ion-buttons {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+
+            ion-icon {
+                font-size: 1.6rem;
+                color: #333;
+            }
+        }
+    }
+}
