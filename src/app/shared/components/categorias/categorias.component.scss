@@ -1,22 +1,27 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 .page-categorias {
-    --background: #00D09E; /* Fundo verde */
+    --background: #00D09E;
+    /* Fundo verde */
     display: flex;
     flex-direction: column;
     padding: 16px;
     height: 100vh;
-    overflow: auto; /* Permite rolagem se necessário */
+    overflow: auto;
+    /* Permite rolagem se necessário */
 }
 
 ion-header {
-    background-color: #00D09E; /* Cor do cabeçalho */
-    color: white; /* Cor do texto */
+    background-color: #00D09E;
+    /* Cor do cabeçalho */
+    color: white;
+    /* Cor do texto */
     box-shadow: none;
 }
-  
+
 ion-toolbar {
-    --background: #00D09E; /* Cor do fundo do toolbar */
+    --background: #00D09E;
+    /* Cor do fundo do toolbar */
     box-shadow: none;
 
     ion-title {
@@ -25,9 +30,10 @@ ion-toolbar {
         font-family: 'Poppins', sans-serif;
     }
 }
-  
+
 ion-title {
-    font-size: 20px; /* Tamanho da fonte do título */
+    font-size: 20px;
+    /* Tamanho da fonte do título */
     text-align: center;
     font-family: 'Poppins', sans-serif;
 }
@@ -47,27 +53,36 @@ ion-title {
     margin-top: 15px;
 
     .titulo {
-        font-size: 16px; /* Tamanho do título */
-        color: #093030; /* Cor do título */
+        font-size: 16px;
+        /* Tamanho do título */
+        color: #093030;
+        /* Cor do título */
         font-family: 'Poppins', sans-serif;
     }
 
     .valor {
-        font-size: 24px; /* Tamanho do valor, maior para destaque */
-        font-weight: bold; /* Negrito para os valores */
-        color: #ffffff; /* Cor do valor */
+        font-size: 24px;
+        /* Tamanho do valor, maior para destaque */
+        font-weight: bold;
+        /* Negrito para os valores */
+        color: #ffffff;
+        /* Cor do valor */
         font-family: 'Poppins', sans-serif;
     }
 
     .despesa-titulo .valor {
-        color: #0068FF; /* Cor do valor das despesas */
+        color: #0068FF;
+        /* Cor do valor das despesas */
         font-family: 'Poppins', sans-serif;
     }
 
     ion-icon {
-        margin-right: 8px; /* Espaçamento entre o ícone e o texto */
-        font-size: 20px; /* Tamanho do ícone */
-        color: #052224; /* Cor do ícone */
+        margin-right: 8px;
+        /* Espaçamento entre o ícone e o texto */
+        font-size: 20px;
+        /* Tamanho do ícone */
+        color: #052224;
+        /* Cor do ícone */
     }
 }
 
@@ -87,17 +102,17 @@ ion-title {
         color: #052224;
         text-align: center;
         margin-top: 8px;
-        
+
     }
 }
 
 .categoria-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start; /* Centraliza os cards */
+    justify-content: center;
     padding-top: 20px;
     background-color: #F1FFF3;
-    height: 65%; 
+    height: 80%; 
     width: 100%; 
     max-width: 500px;
     position: fixed;
@@ -114,7 +129,7 @@ ion-title {
 .categoria-card {
     background-color: #6DB6FE;
     height: 90px;
-    width: calc(33.333% - 20px); /* Largura fixa para três cards por linha */
+    width: calc(50% - 20px); /* Largura fixa para três cards por linha */
     max-width: 120px; /* Limite de largura para não ficar exagerado em telas grandes */
     border-radius: 15px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -146,7 +161,8 @@ ion-title {
     font-size: 12px;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%; /* Para garantir que o texto fique dentro do card */
+    max-width: 100%;
+    /* Para garantir que o texto fique dentro do card */
 }
 
 .nav-footer {
