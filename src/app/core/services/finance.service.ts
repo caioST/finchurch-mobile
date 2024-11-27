@@ -10,7 +10,6 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class FinanceService {
-  private saldosSubject = new BehaviorSubject<any>(null);
 
   constructor(private firestore: AngularFirestore) { }
 
@@ -27,7 +26,6 @@ export class FinanceService {
         })
       );
   }
-
 
   /* Método para obter detalhes de uma subcategoria */
   getSubcategoriaDetalhes(
@@ -56,28 +54,14 @@ export class FinanceService {
       );
   }
 
+
+  /* Adiciona uma transação e atualiza os totais em categorias e subcategorias */
   addSubcategoriaValor(
     colecao: string,
     categoriaId: string,
     subcategoriaId: string,
     data: { tipo: string; quantia: number; data: Date; titulo: string; categoria: string; mensagem?: string }
   ): Promise<void> {
-    // Referência para a subcategoria específica
-    const docRefSubcategoria = this.firestore
-      .collection(colecao)
-      .doc(categoriaId)
-      .collection('subcolecao')
-      .doc(subcategoriaId)
-      .collection('transacoes')
-      .doc();
-
-    // Referência para a categoria principal (transações gerais da categoria)
-    const docRefCategoria = this.firestore
-      .collection(colecao)
-      .doc(categoriaId)
-      .collection('transacoes')
-      .doc();
-
     const transacao = {
       tipo: data.tipo,
       quantia: data.quantia,
@@ -87,18 +71,86 @@ export class FinanceService {
       mensagem: data.mensagem || '',
     };
 
-    // Adiciona a transação na subcategoria
-    const promiseSubcategoria = docRefSubcategoria.set(transacao);
+    // Referências no Firestore
+    const docRefSubcategoria = this.firestore
+      .collection(colecao)
+      .doc(categoriaId)
+      .collection('subcolecao')
+      .doc(subcategoriaId)
+      .collection('transacoes')
+      .doc();
 
-    // Adiciona a transação na categoria principal
-    const promiseCategoria = docRefCategoria.set(transacao);
+    const docRefCategoria = this.firestore
+      .collection(colecao)
+      .doc(categoriaId);
 
-    // Retorna uma promise que resolve quando as duas transações foram adicionadas
-    return Promise.all([promiseSubcategoria, promiseCategoria]).then(() => {
-      console.log('Transação adicionada na subcategoria e na categoria com sucesso!');
+    const docRefSubcategoriaTotais = this.firestore
+      .collection(colecao)
+      .doc(categoriaId)
+      .collection('subcolecao')
+      .doc(subcategoriaId);
+
+    // Adiciona a transação à subcategoria
+    const promiseTransacao = docRefSubcategoria.set(transacao);
+
+    // Atualiza os totais na subcategoria
+    const promiseAtualizarSubcategoria = docRefSubcategoriaTotais.get().pipe(
+      switchMap((snapshot) => {
+        const dadosExistentes = snapshot.data() || { total: 0 };
+        const novoTotal =
+          data.tipo === 'entrada'
+            ? dadosExistentes['total'] + data.quantia
+            : dadosExistentes['total'] - data.quantia;
+
+        return docRefSubcategoriaTotais.update({ total: novoTotal });
+      })
+    ).toPromise();
+
+    const promiseAtualizarCategoria = docRefCategoria.get().pipe(
+      switchMap((snapshot) => {
+        // Garante que 'dadosExistentes' sempre tenha 'total'
+        const dadosExistentes = snapshot.data() as { total: number } || { total: 0 };
+
+        // Calcula o novo total com base no tipo de transação
+        const novoTotal =
+          data.tipo === 'entrada'
+            ? dadosExistentes.total + data.quantia
+            : dadosExistentes.total - data.quantia;
+
+        // Atualiza o total no documento da categoria
+        return docRefCategoria.update({ total: novoTotal });
+      })
+    ).toPromise();
+
+
+    // Retorna uma promise combinada
+    return Promise.all([
+      promiseTransacao,
+      promiseAtualizarSubcategoria,
+      promiseAtualizarCategoria,
+    ]).then(() => {
+      console.log('Transação adicionada com sucesso, totais atualizados.');
     }).catch((error) => {
       console.error('Erro ao adicionar transação:', error);
     });
+  }
+
+  calcularTotaisPorCategoria(colecao: string, categoriaId: string): Observable<number> {
+    return this.firestore
+      .collection(colecao)
+      .doc(categoriaId)
+      .collection('subcolecao')
+      .valueChanges()
+      .pipe(
+        map((subcategorias: any[]) => {
+          console.log(`Subcategorias carregadas para cálculo (${categoriaId}):`, subcategorias);
+          return subcategorias.reduce((total, subcategoria) => total + (subcategoria.total || 0), 0);
+        }),
+        catchError((error) => {
+          console.error('Erro ao calcular totais:', error);
+          return of(0);
+        })
+      );
   }
 
 
@@ -142,6 +194,30 @@ export class FinanceService {
     );
   }
 
+  /* Método para obter todas as subcategorias de uma categoria */
+  getSubcategoriasPorCategoria(colecao: string, categoriaId: string): Observable<any[]> {
+    return this.firestore
+      .collection(colecao)
+      .doc(categoriaId)
+      .collection('subcolecao')
+      .valueChanges({ idField: 'id' });
+  }
+
+  /* Método para obter transações de uma subcategoria */
+  getSubcategoriaTransacoes(
+    colecao: string,
+    categoriaId: string,
+    subcategoriaId: string
+  ): Observable<any[]> {
+    return this.firestore
+      .collection(colecao)
+      .doc(categoriaId)
+      .collection('subcolecao')
+      .doc(subcategoriaId)
+      .collection('transacoes')
+      .valueChanges();
+  }
+
   /* Método para calcular saldos de uma subcategoria */
   calcularSaldos(
     colecao: string,
@@ -161,31 +237,6 @@ export class FinanceService {
         return { entradas, saidas };
       })
     );
-  }
-
-  /* Método para obter todas as subcategorias de uma categoria */
-  getSubcategoriasPorCategoria(colecao: string, categoriaId: string): Observable<any[]> {
-    return this.firestore
-      .collection(colecao)
-      .doc(categoriaId)
-      .collection('subcolecao')
-      .valueChanges({ idField: 'id' });
-  }
-
-
-  /* Método para obter transações de uma subcategoria */
-  getSubcategoriaTransacoes(
-    colecao: string,
-    categoriaId: string,
-    subcategoriaId: string
-  ): Observable<any[]> {
-    return this.firestore
-      .collection(colecao)
-      .doc(categoriaId)
-      .collection('subcolecao')
-      .doc(subcategoriaId)
-      .collection('transacoes')
-      .valueChanges();
   }
 
   /* Obtém o total de todas as transações */

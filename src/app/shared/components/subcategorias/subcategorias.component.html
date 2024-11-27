@@ -9,6 +9,17 @@
 
 <ion-content class="page-subcategorias">
 
+    <!-- Saudação e saldo total -->
+    <ion-card class="greeting-card">
+      <ion-card-content class="total-saldo">
+        <div>
+          <h1>R$ {{ totalCategoria | number: '1.2-2' }}</h1>
+          <ion-progress-bar value="0.3"></ion-progress-bar>
+          <p>30% De Suas Despesas, Parece Bom</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
   <!-- Lista de Subcategorias -->
   <div class="categoria-list" *ngIf="subcategorias.length > 0; else noData">
     <div *ngFor="let subcategoria of subcategorias" class="categoria-card"

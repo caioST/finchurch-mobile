@@ -32,43 +32,35 @@ ion-title {
     font-family: 'Poppins', sans-serif;
 }
 
-.saldo-header {
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.greeting-card {
+    margin: 15px;
+    background-color: #a7f6d1;
+    border-radius: 20px;
+
+    .welcome-title {
+        color: #052224;
+        font-weight: 500;
+
+    }
 }
 
-.saldo-info {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 15px;
+.greeting-card ion-card-header {
+    background-color: #6cd3b0;
+}
 
-    .titulo {
-        font-size: 16px; /* Tamanho do título */
-        color: #093030; /* Cor do título */
-        font-family: 'Poppins', sans-serif;
-    }
+.total-saldo {
+    text-align: center;
+    padding: 20px;
+}
 
-    .valor {
-        font-size: 24px; /* Tamanho do valor, maior para destaque */
-        font-weight: bold; /* Negrito para os valores */
-        color: #ffffff; /* Cor do valor */
-        font-family: 'Poppins', sans-serif;
-    }
+.total-saldo h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #F1FFF3;
+}
 
-    .despesa-titulo .valor {
-        color: #0068FF; /* Cor do valor das despesas */
-        font-family: 'Poppins', sans-serif;
-    }
-
-    ion-icon {
-        margin-right: 8px; /* Espaçamento entre o ícone e o texto */
-        font-size: 20px; /* Tamanho do ícone */
-        color: #052224; /* Cor do ícone */
-    }
+.total-saldo ion-progress-bar {
+    margin-top: 10px;
 }
 
 .progress-bar {
@@ -87,7 +79,6 @@ ion-title {
         color: #052224;
         text-align: center;
         margin-top: 8px;
-        
     }
 }
 

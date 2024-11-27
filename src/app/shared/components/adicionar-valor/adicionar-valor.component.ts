@@ -48,7 +48,7 @@ export class AdicionarValorComponent implements OnInit {
         mensagem: this.mensagem,
       };
 
-      // Adiciona a transação no serviço
+      // Adiciona a transação no Firestore
       await this.financeService.addSubcategoriaValor(
         this.colecao,
         this.categoriaId,
@@ -58,13 +58,15 @@ export class AdicionarValorComponent implements OnInit {
 
       console.log('Transação adicionada com sucesso');
 
-      // Atualiza diretamente a página de subcategorias sem redirecionar
-      this.router.navigate([`/subcategoria/${this.colecao}/${this.categoriaId}/${this.subcategoriaId}`]);
+      // Redireciona para a página de resumo da subcategoria
+      this.router.navigate([
+        `/subcategoria/${this.colecao}/${this.categoriaId}/${this.subcategoriaId}`
+      ]);
     } catch (error) {
       console.error('Erro ao adicionar transação:', error);
-
     }
   }
+
 
   home(): void {
     this.navController.navigateBack(['/home']);

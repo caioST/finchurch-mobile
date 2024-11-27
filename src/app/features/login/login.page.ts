@@ -102,7 +102,7 @@ export class LoginPage {
         disableBackup: true,
       });
       if (result) {
-        this.navCtrl.navigateForward('/home'); 
+        this.navCtrl.navigateForward('/categorias'); 
       }
     } catch (error) {
       console.error('Erro ao autenticar com impressão digital:', error);
