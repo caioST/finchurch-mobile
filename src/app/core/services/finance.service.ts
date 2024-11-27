@@ -106,21 +106,21 @@ export class FinanceService {
       })
     ).toPromise();
 
-const promiseAtualizarCategoria = docRefCategoria.get().pipe(
-  switchMap((snapshot) => {
-    // Garante que 'dadosExistentes' sempre tenha 'total'
-    const dadosExistentes = snapshot.data() as { total: number } || { total: 0 };
+    const promiseAtualizarCategoria = docRefCategoria.get().pipe(
+      switchMap((snapshot) => {
+        // Garante que 'dadosExistentes' sempre tenha 'total'
+        const dadosExistentes = snapshot.data() as { total: number } || { total: 0 };
 
-    // Calcula o novo total com base no tipo de transação
-    const novoTotal =
-      data.tipo === 'entrada'
-        ? dadosExistentes.total + data.quantia
-        : dadosExistentes.total - data.quantia;
+        // Calcula o novo total com base no tipo de transação
+        const novoTotal =
+          data.tipo === 'entrada'
+            ? dadosExistentes.total + data.quantia
+            : dadosExistentes.total - data.quantia;
 
-    // Atualiza o total no documento da categoria
-    return docRefCategoria.update({ total: novoTotal });
-  })
-).toPromise();
+        // Atualiza o total no documento da categoria
+        return docRefCategoria.update({ total: novoTotal });
+      })
+    ).toPromise();
 
 
     // Retorna uma promise combinada
@@ -135,7 +135,6 @@ const promiseAtualizarCategoria = docRefCategoria.get().pipe(
     });
   }
 
-  /* Calcula totais por categoria somando subcategorias */
   calcularTotaisPorCategoria(colecao: string, categoriaId: string): Observable<number> {
     return this.firestore
       .collection(colecao)
@@ -143,11 +142,17 @@ const promiseAtualizarCategoria = docRefCategoria.get().pipe(
       .collection('subcolecao')
       .valueChanges()
       .pipe(
-        map((subcategorias: any[]) => 
-          subcategorias.reduce((total, sub) => total + (sub.total || 0), 0)
-        )
+        map((subcategorias: any[]) => {
+          console.log(`Subcategorias carregadas para cálculo (${categoriaId}):`, subcategorias);
+          return subcategorias.reduce((total, subcategoria) => total + (subcategoria.total || 0), 0);
+        }),
+        catchError((error) => {
+          console.error('Erro ao calcular totais:', error);
+          return of(0);
+        })
       );
   }
+
 
   /* Método para obter todas as subcategorias */
   getAllSubcategorias(): Observable<any[]> {

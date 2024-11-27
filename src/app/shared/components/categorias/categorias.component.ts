@@ -21,18 +21,15 @@ interface Categoria {
   templateUrl: './categorias.component.html',
   styleUrls: ['./categorias.component.scss'],
 })
+
+
 export class CategoriasComponent implements OnInit {
   receitas: Categoria[] = [];
   despesas: Categoria[] = [];
   departamentos: Categoria[] = [];
   campanhas: Categoria[] = [];
-  saldos = {
-    total: 0,
-    receitas: 0,
-    despesas: 0,
-    departamentos: 0,
-    campanhas: 0,
-  };
+  totalGeralEntradas: number = 0;
+
 
   constructor(
     private router: Router,
@@ -64,9 +61,9 @@ export class CategoriasComponent implements OnInit {
         this.despesas = despesas;
         this.departamentos = departamentos;
         this.campanhas = campanhas;
-
       });
   }
+  
 
   // Método para obter as subcategorias de cada tipo de categoria
   getSubcategorias(tipo: string): string[] {

@@ -45,9 +45,12 @@ export class SubcategoriasComponent implements OnInit {
     this.financeService
       .calcularTotaisPorCategoria(this.colecao, this.categoriaId)
       .subscribe((total) => {
+        console.log(`Total da categoria (${this.categoriaId}):`, total);
         this.totalCategoria = total;
       });
   }
+  
+  
 
   obterSaldo(subcategoriaId: string): { entradas: number; saidas: number } {
     return this.saldos[subcategoriaId] || { entradas: 0, saidas: 0 };

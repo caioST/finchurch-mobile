@@ -10,34 +10,68 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
-  totalTransacoes: number = 0;
-  historicoTransacoes: any[] = [];
+  saldos: { [key: string]: { entradas: number; saidas: number } } = {};
+  totalEntradas: number = 0;
+  totalSaidas: number = 0;
   userPhoto: string = '';
 
   constructor(
     private financeService: FinanceService,
     private authService: AuthService,
     private navController: NavController
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.carregarDados();
+    this.carregarDadosTotais();
     this.carregarFotoUsuario();
   }
 
-  carregarDados() {
-    // Usando forkJoin para obter o total de transações e o histórico ao mesmo tempo
-    forkJoin({
-      total: this.financeService.obterTotalTransacoes(),
-      historico: this.financeService.obterHistoricoTransacoes(),
-    }).subscribe({
-      next: (res) => {
-        this.totalTransacoes = res.total;
-        this.historicoTransacoes = res.historico;
+  carregarDadosTotais() {
+    this.financeService.getAllSubcategorias().subscribe({
+      next: (subcategorias) => {
+        console.log('Subcategorias carregadas:', subcategorias);
+
+        // Para verificar se está passando corretamente as subcategorias para os cálculos
+        const calculos = subcategorias.map((subcategoria) => {
+          console.log('Calculando saldo para subcategoria:', subcategoria);
+          return this.financeService.calcularSaldos(
+            subcategoria.colecao,
+            subcategoria.categoriaId,
+            subcategoria.id
+          );
+        });
+
+        forkJoin(calculos).subscribe({
+          next: (resultados) => {
+            console.log('Resultados dos cálculos:', resultados);
+
+            let entradasTotal = 0;
+            let saidasTotal = 0;
+
+            resultados.forEach((saldos, index) => {
+              console.log(`Entradas e Saídas da subcategoria ${index + 1}:`, saldos);
+
+              // Somando entradas e saídas para o total
+              entradasTotal += saldos.entradas;
+              saidasTotal += saldos.saidas;
+            });
+
+            // Log dos totais calculados
+            console.log('Total de Entradas (calculado):', entradasTotal);
+            console.log('Total de Saídas (calculado):', saidasTotal);
+
+            // Atualizando os totais no componente
+            this.totalEntradas = entradasTotal;
+            this.totalSaidas = saidasTotal;
+          },
+          error: (error) => {
+            console.error('Erro ao calcular saldos:', error);
+          },
+        });
       },
       error: (error) => {
-        console.error('Erro ao carregar dados:', error);
-      }
+        console.error('Erro ao carregar subcategorias:', error);
+      },
     });
   }
 
@@ -64,14 +98,12 @@ export class HomePage implements OnInit {
   abrirNotificacoes(): void {
     this.navController.navigateBack(['/notificacoes']);
   }
-  
+
   categorias(): void {
     this.navController.navigateBack(['/categorias']);
   }
 
   goToProfile() {
-    // Navegar para a página de perfil
-    // Substitua `'/perfil'` pela rota correta da página de perfil
     window.location.href = '/profile';
   }
 }
