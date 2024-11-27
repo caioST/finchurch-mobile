@@ -80,7 +80,8 @@ const routes: Routes = [
   {
     path: 'delete-account',
     loadChildren: () => import('./features/delete-account/delete-account.module').then( m => m.DeleteAccountPageModule)
-  },  {
+  },
+  {
     path: 'reset-password',
     loadChildren: () => import('./features/reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   },
